@@ -14,6 +14,7 @@ const Index = () => {
         alignItems="center"
       >
         {renderEquation()}
+        {renderSymbols()}
       </Flex>
     </>
   )
@@ -24,6 +25,15 @@ const renderEquation = () => {
     <Flex>
       <Text pr={4}>Equation: </Text>
       $y = ax^2 + bx + c$
+    </Flex>
+  )
+}
+
+const renderSymbols = () => {
+  return (
+    <Flex>
+      <Text pr={4}>Symbols: </Text>
+      $x \in \mathbb{"{"}R{"}"}$
     </Flex>
   )
 }
