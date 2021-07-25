@@ -23,6 +23,7 @@ const Index = () => {
           <Tbody>
             {renderEquation()}
             {renderSymbols()}
+            {renderEnvironment()}
           </Tbody>
         </Table>
       </Flex>
@@ -49,6 +50,19 @@ const renderSymbols = () => {
       </Td>
       <Td>
         $x \in \mathbb{"{"}R{"}"}$
+      </Td>
+    </Tr>
+  )
+}
+
+const renderEnvironment = () => {
+  return (
+    <Tr>
+      <Td>
+        <Text pr={4}>Environment: </Text>
+      </Td>
+      <Td>
+        $\begin{"{"}pmatrix{"}"}1 & 2 & 3 \\ 4 & 5 & 6 \end{"{"}pmatrix{"}"}$
       </Td>
     </Tr>
   )
