@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react"
+import { Flex, Text, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react"
 
 import { MathTypeset } from "../components/MathJax"
 
@@ -13,8 +13,18 @@ const Index = () => {
         justifyContent="center"
         alignItems="center"
       >
-        {renderEquation()}
-        {renderSymbols()}
+        <Table w="60%">
+          <Thead>
+            <Tr>
+              <Th>Type</Th>
+              <Th>Sample</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {renderEquation()}
+            {renderSymbols()}
+          </Tbody>
+        </Table>
       </Flex>
     </>
   )
@@ -22,19 +32,25 @@ const Index = () => {
 
 const renderEquation = () => {
   return (
-    <Flex>
-      <Text pr={4}>Equation: </Text>
-      $y = ax^2 + bx + c$
-    </Flex>
+    <Tr>
+      <Td>
+        <Text pr={4}>Equation: </Text>
+      </Td>
+      <Td>$y = ax^2 + bx + c$</Td>
+    </Tr>
   )
 }
 
 const renderSymbols = () => {
   return (
-    <Flex>
-      <Text pr={4}>Symbols: </Text>
-      $x \in \mathbb{"{"}R{"}"}$
-    </Flex>
+    <Tr>
+      <Td>
+        <Text pr={4}>Symbols: </Text>
+      </Td>
+      <Td>
+        $x \in \mathbb{"{"}R{"}"}$
+      </Td>
+    </Tr>
   )
 }
 
