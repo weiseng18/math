@@ -18,4 +18,4 @@ const calcDeterminant = (req, res) => {
   }
 }
 
-export default { calcDeterminant }
+module.exports = { calcDeterminant }
