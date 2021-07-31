@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "version": "auto-changelog -p -l 0 && git add CHANGELOG.md",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/"
   },
   "repository": {
     "type": "git",
@@ -29,11 +29,16 @@
     "framer-motion": "^4.1.17",
     "next": "^11.0.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "test-listen": "^1.1.0",
+    "vercel-node-server": "^2.2.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
-    "husky": "^7.0.1"
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "husky": "^7.0.1",
+    "mocha": "^9.0.3"
   }
 }
