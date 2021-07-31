@@ -1,14 +1,14 @@
 // standard testing modules
-import chai from "chai"
-import chaiHttp from "chai-http"
+const chai = require("chai")
+const chaiHttp = require("chai-http")
 
 // modules that help testing serverless functions
-import { createServer } from "vercel-node-server"
-import listen from "test-listen"
+const { createServer } = require("vercel-node-server")
+const listen = require("test-listen")
 
 // import methods to be tested
-import Test from "../methods/test.js"
-import Matrix from "../methods/matrix.js"
+const Test = require("../methods/test")
+const Matrix = require("../methods/matrix")
 
 // beforeEach management
 let route, method, server, url
