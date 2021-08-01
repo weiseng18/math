@@ -1,5 +1,5 @@
-import Test from "../../methods/test"
-import Matrix from "../../methods/matrix"
+import Test from "../../app/methods/test"
+import Matrix from "../../app/methods/matrix"
 
 const app = require("express")()
 
