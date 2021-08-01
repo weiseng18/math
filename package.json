@@ -37,6 +37,7 @@
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
+    "@types/react": "^17.0.15",
     "@vercel/node": "^1.11.1",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
