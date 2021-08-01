@@ -7,8 +7,8 @@ const { createServer } = require("vercel-node-server")
 const listen = require("test-listen")
 
 // import methods to be tested
-const Test = require("../app/methods/test")
-const Matrix = require("../app/methods/matrix")
+const Test = require("../app/controllers/test")
+const Matrix = require("../app/controllers/matrix")
 
 // beforeEach management
 let route, method, server, url
