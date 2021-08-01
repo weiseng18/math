@@ -1,5 +1,11 @@
-const calcDeterminant = (req, res) => {
-  const matrix = JSON.parse(req.query.matrix)
+import { VercelRequest, VercelResponse } from "@vercel/node"
+
+const calcDeterminant = (req: VercelRequest, res: VercelResponse) => {
+  let matrix
+  // string array
+  if (Array.isArray(req.query.matrix))
+    matrix = JSON.parse(req.query.matrix.join())
+  else matrix = JSON.parse(req.query.matrix)
 
   const rows = matrix.length
   const cols = matrix[0].length
@@ -18,4 +24,6 @@ const calcDeterminant = (req, res) => {
   }
 }
 
-module.exports = { calcDeterminant }
+export default {
+  calcDeterminant,
+}
