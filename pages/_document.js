@@ -1,6 +1,6 @@
 import Document, { Head, Html, Main, NextScript } from "next/document"
 
-import { Imports } from "../components/MathJax"
+import { Imports } from "components/MathJax"
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {

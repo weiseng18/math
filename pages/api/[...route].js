@@ -1,5 +1,5 @@
-import Test from "../../app/controllers/test"
-import Matrix from "../../app/controllers/matrix"
+import Test from "app/controllers/test"
+import Matrix from "app/controllers/matrix"
 
 const app = require("express")()
 
