@@ -1,17 +1,20 @@
 // standard testing modules
-const chai = require("chai")
-const chaiHttp = require("chai-http")
+import chai from "chai"
+import chaiHttp from "chai-http"
 
 // modules that help testing serverless functions
-const { createServer } = require("vercel-node-server")
-const listen = require("test-listen")
+import { createServer } from "vercel-node-server"
+import listen from "test-listen"
+
+// types
+import { Server } from "http"
 
 // import methods to be tested
-const Test = require("../controllers/test")
-const Matrix = require("../controllers/matrix")
+import Test from "../controllers/test"
+import Matrix from "../controllers/matrix"
 
 // beforeEach management
-let route, method, server, url
+let route: string, method, server: Server, url: string
 
 let testIndex = 0
 const toTest = [
@@ -52,7 +55,7 @@ describe("API tests", () => {
         .request(url)
         .get(route)
         .then((res) => {
-          chai.expect(res.statusCode).to.equal(200)
+          chai.expect(res.status).to.equal(200)
           chai.expect(res.text).to.equal("API call successful")
         })
     })
@@ -70,7 +73,7 @@ describe("API tests", () => {
           matrix: "[[1,2],[3,4]]",
         })
         .then((res) => {
-          chai.expect(res.statusCode).to.equal(200)
+          chai.expect(res.status).to.equal(200)
           chai.expect(res.body).to.equal(-2)
         })
     })
@@ -82,7 +85,7 @@ describe("API tests", () => {
           matrix: "[[1,2,3],[4,5,6],[7,8,9]]",
         })
         .then((res) => {
-          chai.expect(res.statusCode).to.equal(500)
+          chai.expect(res.status).to.equal(500)
           chai.expect(res.body.message).to.equal("Unsupported")
         })
     })
