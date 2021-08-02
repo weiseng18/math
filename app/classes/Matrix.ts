@@ -38,10 +38,14 @@ class SquareMatrix extends BaseMatrix {
   }
 
   calcDeterminant() {
-    return (
-      this.entries[0][0] * this.entries[1][1] -
-      this.entries[0][1] * this.entries[1][0]
-    )
+    if (this.rows == 2) {
+      return (
+        this.entries[0][0] * this.entries[1][1] -
+        this.entries[0][1] * this.entries[1][0]
+      )
+    } else {
+      throw new Error("Unsupported")
+    }
   }
 }
 

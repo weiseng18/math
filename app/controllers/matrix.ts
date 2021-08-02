@@ -20,12 +20,8 @@ const calcDeterminant = (req: VercelRequest, res: VercelResponse) => {
     })
 
     // can assume square matrix
-    if (rows == 2) {
-      const determinant = squareMatrix.calcDeterminant()
-      res.json(determinant)
-    } else {
-      throw new Error("Unsupported")
-    }
+    const determinant = squareMatrix.calcDeterminant()
+    res.json(determinant)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
