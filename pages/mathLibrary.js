@@ -1,6 +1,6 @@
 import { Flex, Text, Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react"
 
-import { MathTypeset } from "../components/MathJax"
+import { MathTypeset } from "components/MathJax"
 
 const Index = () => {
   return (
