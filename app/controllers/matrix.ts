@@ -1,26 +1,29 @@
 import { VercelRequest, VercelResponse } from "@vercel/node"
 
+import { SquareMatrix } from "../classes/Matrix"
+
 const calcDeterminant = (req: VercelRequest, res: VercelResponse) => {
-  let matrix
-  // string array
-  if (Array.isArray(req.query.matrix))
-    matrix = JSON.parse(req.query.matrix.join())
-  else matrix = JSON.parse(req.query.matrix)
+  try {
+    let matrix
+    // string array
+    if (Array.isArray(req.query.matrix))
+      matrix = JSON.parse(req.query.matrix.join())
+    else matrix = JSON.parse(req.query.matrix)
 
-  const rows = matrix.length
-  const cols = matrix[0].length
+    const rows = matrix.length
+    const cols = matrix[0].length
 
-  if (rows !== cols) {
-    res.status(500).json({ message: "Row and column counts do not match" })
-  }
+    const squareMatrix = new SquareMatrix({
+      rows,
+      columns: cols,
+      entries: matrix,
+    })
 
-  // can assume square matrix
-  if (rows == 2) {
-    const determinant =
-      matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+    // can assume square matrix
+    const determinant = squareMatrix.calcDeterminant()
     res.json(determinant)
-  } else {
-    res.status(500).json({ message: "Unsupported" })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
   }
 }
 

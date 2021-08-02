@@ -89,5 +89,19 @@ describe("API tests", () => {
           chai.expect(res.body.message).to.equal("Unsupported")
         })
     })
+    it("should obtain 500 for 3 by 2 matrix", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1,2],[3,4],[5,6]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(500)
+          chai
+            .expect(res.body.message)
+            .to.equal("Row and column counts do not match")
+        })
+    })
   })
 })
