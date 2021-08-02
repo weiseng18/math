@@ -36,6 +36,13 @@ class SquareMatrix extends BaseMatrix {
       throw new Error("Row and column counts do not match")
     super(props)
   }
+
+  calcDeterminant() {
+    return (
+      this.entries[0][0] * this.entries[1][1] -
+      this.entries[0][1] * this.entries[1][0]
+    )
+  }
 }
 
 export { Matrix, SquareMatrix }
