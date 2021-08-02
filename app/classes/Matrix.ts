@@ -1,18 +1,27 @@
 interface IMatrix {
   rows: number
   columns: number
-  entries: Array<Array<number>>
+  entries?: Array<Array<number>>
 }
 
 abstract class BaseMatrix {
   rows: number
   columns: number
-  entries: Array<Array<number>>
+  entries?: Array<Array<number>>
 
   constructor(props: IMatrix) {
     this.rows = props.rows
     this.columns = props.columns
-    this.entries = props.entries
+
+    if (props.entries) this.entries = props.entries
+    else {
+      // initialize a zero matrix
+      let tmp = [],
+        row = []
+      for (let i = 0; i < this.columns; i++) row.push(0)
+      for (let i = 0; i < this.rows; i++) tmp.push([...row])
+      this.entries = tmp
+    }
   }
 }
 
