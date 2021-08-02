@@ -39,14 +39,31 @@ class SquareMatrix extends BaseMatrix {
   }
 
   calcDeterminant() {
-    if (this.rows == 2) {
-      return (
-        this.entries[0][0] * this.entries[1][1] -
-        this.entries[0][1] * this.entries[1][0]
-      )
-    } else {
-      throw new Error("Unsupported")
+    // base case
+    if (this.rows == 1) return this.entries[0][0]
+
+    let determinant = 0
+    for (let k = 0; k < this.columns; k++) {
+      // (n-1) by (n-1) matrix that excludes row 1 and column k
+      const mat = new SquareMatrix({
+        rows: this.rows - 1,
+        columns: this.columns - 1,
+      })
+      // copy respective rows and columns
+      for (let i = 1; i < this.rows; i++)
+        for (let j = 0; j < this.columns; j++) {
+          if (j == k) continue
+          const col = j > k ? j - 1 : j
+          mat.entries[i - 1][col] = this.entries[i][j]
+        }
+      // determine whether to add or subtract
+      const sign = k % 2 ? -1 : 1
+
+      // sum up
+      determinant += sign * this.entries[0][k] * mat.calcDeterminant()
     }
+
+    return determinant
   }
 }
 
