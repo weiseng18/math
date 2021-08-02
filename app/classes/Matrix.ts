@@ -17,10 +17,6 @@ abstract class BaseMatrix {
 }
 
 class Matrix extends BaseMatrix {
-  rows: number
-  columns: number
-  entries: Array<Array<number>>
-
   constructor(props: IMatrix) {
     super(props)
   }
