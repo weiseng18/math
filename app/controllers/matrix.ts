@@ -1,5 +1,7 @@
 import { VercelRequest, VercelResponse } from "@vercel/node"
 
+import { Matrix } from "../classes/Matrix"
+
 const calcDeterminant = (req: VercelRequest, res: VercelResponse) => {
   let matrix
   // string array
@@ -14,10 +16,17 @@ const calcDeterminant = (req: VercelRequest, res: VercelResponse) => {
     res.status(500).json({ message: "Row and column counts do not match" })
   }
 
+  const squareMatrix = new Matrix({
+    rows,
+    columns: cols,
+    entries: matrix,
+  })
+
   // can assume square matrix
   if (rows == 2) {
     const determinant =
-      matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+      squareMatrix.entries[0][0] * squareMatrix.entries[1][1] -
+      squareMatrix.entries[0][1] * squareMatrix.entries[1][0]
     res.json(determinant)
   } else {
     res.status(500).json({ message: "Unsupported" })
