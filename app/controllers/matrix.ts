@@ -1,6 +1,6 @@
 import { VercelRequest, VercelResponse } from "@vercel/node"
 
-import { Matrix } from "../classes/Matrix"
+import { SquareMatrix } from "../classes/Matrix"
 
 const calcDeterminant = (req: VercelRequest, res: VercelResponse) => {
   try {
@@ -13,11 +13,7 @@ const calcDeterminant = (req: VercelRequest, res: VercelResponse) => {
     const rows = matrix.length
     const cols = matrix[0].length
 
-    if (rows !== cols) {
-      throw new Error("Row and column counts do not match")
-    }
-
-    const squareMatrix = new Matrix({
+    const squareMatrix = new SquareMatrix({
       rows,
       columns: cols,
       entries: matrix,
