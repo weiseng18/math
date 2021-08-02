@@ -27,10 +27,6 @@ class Matrix extends BaseMatrix {
 }
 
 class SquareMatrix extends BaseMatrix {
-  rows: number
-  columns: number
-  entries: Array<Array<number>>
-
   constructor(props: IMatrix) {
     if (props.rows != props.columns)
       throw new Error("Row and column counts do not match")
