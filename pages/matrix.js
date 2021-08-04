@@ -3,8 +3,11 @@ import { useState } from "react"
 
 import axios from "axios"
 
+import { convert2DArrayToMatrix } from "../utils"
+
 const Page = () => {
   const [query, setQuery] = useState("")
+  const [inputArray, setInputArray] = useState("")
   const [answer, setAnswer] = useState("")
 
   const handleChange = (e) => {
@@ -24,6 +27,7 @@ const Page = () => {
       },
     })
 
+    setInputArray(JSON.parse(query))
     setAnswer(res.data)
 
     // force math typesetting
@@ -46,6 +50,7 @@ const Page = () => {
         </HStack>
         {answer && (
           <>
+            <Text>Input: ${convert2DArrayToMatrix(inputArray)}$</Text>
             <Text>Output: ${answer}$</Text>
           </>
         )}
