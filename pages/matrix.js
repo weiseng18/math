@@ -11,6 +11,10 @@ const Page = () => {
     setQuery(e.target.value)
   }
 
+  const handleKeydown = (e) => {
+    if (e.keyCode == 13 || e.key == "Enter") handleSubmit()
+  }
+
   const handleSubmit = async () => {
     if (query === "") return
 
@@ -33,6 +37,7 @@ const Page = () => {
           <Input
             isRequired
             onChange={handleChange}
+            onKeyDown={handleKeydown}
             placeholder="Put in your query"
           />
           <Button disabled={!query.length} onClick={handleSubmit}>
