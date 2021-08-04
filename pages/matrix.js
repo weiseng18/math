@@ -49,10 +49,10 @@ const Page = () => {
           </Button>
         </HStack>
         {answer && (
-          <>
+          <HStack key={inputArray.join()} spacing={8} alignItems="flex-start">
             <Text>Input: ${convert2DArrayToMatrix(inputArray)}$</Text>
             <Text>Output: ${answer}$</Text>
-          </>
+          </HStack>
         )}
       </VStack>
     </Flex>
