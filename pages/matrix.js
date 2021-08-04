@@ -48,7 +48,7 @@ const Page = () => {
             Submit
           </Button>
         </HStack>
-        {answer && (
+        {answer !== "" && (
           <VStack key={inputArray.join()} spacing={8} pt={8}>
             <HStack spacing={1}>
               <Text>Your input is interpreted as:</Text>
