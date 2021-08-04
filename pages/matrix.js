@@ -9,8 +9,10 @@ const Page = () => {
   const [query, setQuery] = useState("")
   const [inputArray, setInputArray] = useState("")
   const [answer, setAnswer] = useState("")
+  const [error, setError] = useState("")
 
   const handleChange = (e) => {
+    setError("")
     setQuery(e.target.value)
   }
 
@@ -19,19 +21,24 @@ const Page = () => {
   }
 
   const handleSubmit = async () => {
+    // empty query
     if (query === "") return
 
-    const res = await axios.get("/api/matrix/determinant", {
-      params: {
-        matrix: query,
-      },
-    })
+    try {
+      const res = await axios.get("/api/matrix/determinant", {
+        params: {
+          matrix: query,
+        },
+      })
 
-    setInputArray(JSON.parse(query))
-    setAnswer(res.data)
+      setInputArray(JSON.parse(query))
+      setAnswer(res.data)
 
-    // force math typesetting
-    MathJax.typeset()
+      // force math typesetting
+      MathJax.typeset()
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   return (
@@ -44,10 +51,14 @@ const Page = () => {
             onKeyDown={handleKeydown}
             placeholder="Put in your query"
           />
-          <Button disabled={!query.length} onClick={handleSubmit}>
+          <Button
+            disabled={error !== "" || !query.length}
+            onClick={handleSubmit}
+          >
             Submit
           </Button>
         </HStack>
+        {error !== "" && <Text color="crimson">Error: {error}</Text>}
         {answer !== "" && (
           <VStack key={inputArray.join()} spacing={8} pt={8}>
             <HStack spacing={1}>
