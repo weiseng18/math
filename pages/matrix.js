@@ -21,6 +21,9 @@ const Page = () => {
     })
 
     setAnswer(res.data)
+
+    // force math typesetting
+    MathJax.typeset()
   }
 
   return (
@@ -38,7 +41,7 @@ const Page = () => {
         </HStack>
         {answer && (
           <>
-            <Text>Output: {answer}</Text>
+            <Text>Output: ${answer}$</Text>
           </>
         )}
       </VStack>
