@@ -49,10 +49,19 @@ const Page = () => {
           </Button>
         </HStack>
         {answer && (
-          <HStack key={inputArray.join()} spacing={8} alignItems="flex-start">
-            <Text>Input: ${convert2DArrayToMatrix(inputArray)}$</Text>
-            <Text>Output: ${answer}$</Text>
-          </HStack>
+          <VStack key={inputArray.join()} spacing={8} pt={8}>
+            <HStack spacing={1}>
+              <Text>Your input is interpreted as:</Text>
+              <Text>${convert2DArrayToMatrix(inputArray)}$</Text>
+            </HStack>
+            <HStack spacing={1} bgColor="gray.200" padding={4}>
+              <Text>
+                $\mathrm{"{"}det{"}"}
+                {convert2DArrayToMatrix(inputArray)} = $
+              </Text>
+              <Text>${answer}$</Text>
+            </HStack>
+          </VStack>
         )}
       </VStack>
     </Flex>
