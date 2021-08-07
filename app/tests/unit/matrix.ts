@@ -153,5 +153,37 @@ export default () => {
         })
       })
     })
+    describe("addMultiple", () => {
+      it("should add a multiple of one row to another row correctly", () => {
+        const matrix = new Matrix({
+          rows: 3,
+          columns: 3,
+          entries: [
+            [1, 2, 3],
+            [1, 0, 0],
+            [0, 1, 0],
+          ],
+        })
+
+        // tests
+        const inputs = [
+          { baseRowIdx: 0, factor: 1, addToIdx: 2 },
+          { baseRowIdx: 1, factor: 2, addToIdx: 0 },
+        ]
+        const outputs = [
+          [1, 3, 3],
+          [3, 2, 3],
+        ]
+
+        inputs.forEach((options, idx) => {
+          matrix.addMultiple(
+            options.baseRowIdx,
+            options.factor,
+            options.addToIdx
+          )
+          chai.expect(matrix.entries[options.addToIdx]).to.eql(outputs[idx])
+        })
+      })
+    })
   })
 }

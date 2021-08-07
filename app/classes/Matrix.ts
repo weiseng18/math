@@ -103,6 +103,18 @@ abstract class BaseMatrix {
     this.entries[i] = this.entries[j]
     this.entries[j] = tmp
   }
+
+  /**
+   * Adds a multiple of one row to another row
+   * @param rowIdx index of the row to multiply factor
+   * @param factor factor to multiply by
+   * @param addToIdx index of the row to add to
+   */
+  addMultiple(rowIdx: number, factor: number, addToIdx: number) {
+    range(this.columns).forEach((colIdx) => {
+      this.entries[addToIdx][colIdx] += this.entries[rowIdx][colIdx] * factor
+    })
+  }
 }
 
 class Matrix extends BaseMatrix {
