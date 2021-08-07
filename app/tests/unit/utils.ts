@@ -5,7 +5,7 @@ import chai from "chai"
 import { range } from "../../utils/misc"
 import { isZeroRow, leadingEntryIndex } from "../../utils/Matrix"
 
-describe("Util tests", () => {
+export default () => {
   describe("Misc: range", () => {
     it("should return an array of length N", () => {
       const res = range(5).every((val) => {
@@ -54,4 +54,4 @@ describe("Util tests", () => {
       chai.expect(res).to.equal(true)
     })
   })
-})
+}
