@@ -83,6 +83,15 @@ abstract class BaseMatrix {
     // reaching here means RREF
     return EchelonType.RREF
   }
+
+  /**
+   * Multiplies a row by a given factor
+   * @param rowIdx row index number
+   * @param factor factor to multiply by
+   */
+  multiplyRow(rowIdx: number, factor: number) {
+    this.entries[rowIdx] = this.entries[rowIdx].map((one) => factor * one)
+  }
 }
 
 class Matrix extends BaseMatrix {

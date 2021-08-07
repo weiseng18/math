@@ -82,4 +82,37 @@ export default () => {
       })
     })
   })
+
+  describe("Row operations", () => {
+    describe("multiplyRow", () => {
+      it("should multiply a row by a factor correctly", () => {
+        const matrix = new Matrix({
+          rows: 3,
+          columns: 3,
+          entries: [
+            [1, 2, 3],
+            [1, 0, 0],
+            [0, 1, 0],
+          ],
+        })
+
+        // tests
+        const inputs = [
+          { rowIdx: 0, factor: 2 },
+          { rowIdx: 1, factor: 1 },
+          { rowIdx: 2, factor: -1 },
+        ]
+        const outputs = [
+          [2, 4, 6],
+          [1, 0, 0],
+          [-0, -1, -0],
+        ]
+
+        inputs.forEach((options, idx) => {
+          matrix.multiplyRow(options.rowIdx, options.factor)
+          chai.expect(matrix.entries[options.rowIdx]).to.eql(outputs[idx])
+        })
+      })
+    })
+  })
 }
