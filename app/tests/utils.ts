@@ -1,12 +1,20 @@
 // standard testing modules
 import chai from "chai"
 
-import { range } from "../utils/misc"
-
 // import utils to be tested
+import { range } from "../utils/misc"
 import { isZeroRow } from "../utils/Matrix"
 
 describe("Util tests", () => {
+  describe("Misc: range", () => {
+    it("should return an array of length N", () => {
+      const res = range(5).every((val) => {
+        return range(val + 1).length === val + 1
+      })
+      chai.expect(res).to.equal(true)
+    })
+  })
+
   describe("Matrix: isZeroRow", () => {
     it("should return true for zero array", () => {
       const res = range(5).every((val) => {
