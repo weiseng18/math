@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "version": "auto-changelog -p -l 0 && git add CHANGELOG.md",
-    "test": "mocha -r ts-node/register app/tests/index.ts"
+    "test": "mocha -r ts-node/register app/tests/index.ts",
+    "test-unit": "mocha -r ts-node/register app/tests/utils.ts"
   },
   "repository": {
     "type": "git",
