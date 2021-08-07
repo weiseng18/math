@@ -1,6 +1,5 @@
 name: Github Actions
 on:
-  push:
   pull_request:
 jobs:
   test-api:
