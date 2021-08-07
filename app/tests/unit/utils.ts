@@ -2,8 +2,8 @@
 import chai from "chai"
 
 // import utils to be tested
-import { range } from "../utils/misc"
-import { isZeroRow, leadingEntryIndex } from "../utils/Matrix"
+import { range } from "../../utils/misc"
+import { isZeroRow, leadingEntryIndex } from "../../utils/Matrix"
 
 describe("Util tests", () => {
   describe("Misc: range", () => {
