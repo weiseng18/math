@@ -11,7 +11,7 @@ const Page = () => {
 
   const [command, setCommand] = useState("") // action from processed query
   const [inputArray, setInputArray] = useState([[]]) // matrix from processed query
-  const [answer, setAnswer] = useState("")
+  const [answer, setAnswer] = useState("") // Latex string
 
   const handleChange = (e) => {
     setError("")
@@ -42,10 +42,19 @@ const Page = () => {
             },
           })
           setCommand("\\mathrm{det}")
+          setAnswer(res.data)
+          break
+        case "rref":
+          res = await axios.get("/api/matrix/rref", {
+            params: {
+              matrix,
+            },
+          })
+          setCommand("\\mathrm{rref}")
+          setAnswer(convert2DArrayToMatrix(res.data.matrix))
           break
       }
       setInputArray(JSON.parse(matrix))
-      setAnswer(res.data)
 
       // force math typesetting
       MathJax.typeset()
