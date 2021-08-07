@@ -6,10 +6,12 @@ import axios from "axios"
 import { convert2DArrayToMatrix } from "../utils"
 
 const Page = () => {
-  const [query, setQuery] = useState("")
-  const [inputArray, setInputArray] = useState("")
+  const [query, setQuery] = useState("") // text in the input
+  const [error, setError] = useState("") // error regarding query
+
+  const [command, setCommand] = useState("") // action from processed query
+  const [inputArray, setInputArray] = useState("") // matrix from processed query
   const [answer, setAnswer] = useState("")
-  const [error, setError] = useState("")
 
   const handleChange = (e) => {
     setError("")
@@ -39,6 +41,7 @@ const Page = () => {
               matrix,
             },
           })
+          setCommand("\\mathrm{det}")
           break
       }
       setInputArray(JSON.parse(matrix))
@@ -77,7 +80,7 @@ const Page = () => {
             </HStack>
             <HStack spacing={1} bgColor="gray.200" padding={4}>
               <Text>
-                $\mathrm{"{"}det{"}"}
+                ${command}
                 {convert2DArrayToMatrix(inputArray)} = $
               </Text>
               <Text>${answer}$</Text>
