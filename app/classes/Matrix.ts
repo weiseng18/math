@@ -154,11 +154,13 @@ abstract class BaseMatrix {
           }
 
         // swap top row with this row
-        this.swapRows(rowsDone, firstEntryRowIdx)
-        actions.push({
-          action: "swap",
-          params: [rowsDone, firstEntryRowIdx],
-        })
+        if (rowsDone !== firstEntryRowIdx) {
+          this.swapRows(rowsDone, firstEntryRowIdx)
+          actions.push({
+            action: "swap",
+            params: [rowsDone, firstEntryRowIdx],
+          })
+        }
 
         // add multiple of top row to every other row below
         const pivotValue = this.entries[rowsDone][colIdx]
