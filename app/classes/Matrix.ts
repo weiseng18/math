@@ -133,6 +133,12 @@ abstract class BaseMatrix {
   toREF() {
     let actions = [] // array of actions done during REF
 
+    actions.push({
+      action: "none",
+      params: [],
+      matrix: this.entries,
+    })
+
     let colIdx = 0 // leftmost nonzero column idx
     let rowsDone = 0 // number of rows done
 
@@ -159,6 +165,7 @@ abstract class BaseMatrix {
           actions.push({
             action: "swap",
             params: [rowsDone, firstEntryRowIdx],
+            matrix: this.entries,
           })
         }
 
@@ -170,6 +177,7 @@ abstract class BaseMatrix {
           actions.push({
             action: "addMultiple",
             params: [rowsDone, factor, i],
+            matrix: this.entries,
           })
         }
 
@@ -200,6 +208,7 @@ abstract class BaseMatrix {
         actions.push({
           action: "multiplyRow",
           params: [rowIdx, factor],
+          matrix: this.entries,
         })
       }
     })
@@ -216,6 +225,7 @@ abstract class BaseMatrix {
           actions.push({
             action: "addMultiple",
             params: [i, factor, j],
+            matrix: this.entries,
           })
         }
       }
