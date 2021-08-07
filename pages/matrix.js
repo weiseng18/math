@@ -64,7 +64,13 @@ const Page = () => {
   }
 
   return (
-    <Flex h="100vh" w="100vw" justifyContent="center" alignItems="center">
+    <Flex
+      h="100vh"
+      w="100vw"
+      justifyContent="center"
+      alignItems="center"
+      my="100px"
+    >
       <VStack spacing={4} w="60%">
         <HStack spacing={4} w="100%">
           <Input
