@@ -181,6 +181,46 @@ abstract class BaseMatrix {
 
     return actions
   }
+
+  /**
+   * Reduces the matrix to RREF
+   */
+  toRREF() {
+    let actions = this.toREF()
+
+    // make all leading entries 1
+    this.entries.forEach((row, rowIdx) => {
+      const colIdx = leadingEntryIndex(row)
+      if (colIdx !== -1) {
+        const leadingVal = row[colIdx]
+        const factor = 1 / leadingVal
+        this.multiplyRow(rowIdx, factor)
+        actions.push({
+          action: "multiplyRow",
+          params: [rowIdx, factor],
+        })
+      }
+    })
+
+    // add multiples to rows above
+    for (let i = this.rows - 1; i >= 0; i--) {
+      const colIdx = leadingEntryIndex(this.entries[i])
+      if (colIdx === -1) continue
+
+      for (let j = i - 1; j >= 0; j--) {
+        const factor = -this.entries[j][colIdx]
+        if (factor !== 0) {
+          this.addMultiple(i, factor, j)
+          actions.push({
+            action: "addMultiple",
+            params: [i, factor, j],
+          })
+        }
+      }
+    }
+
+    return actions
+  }
 }
 
 class Matrix extends BaseMatrix {
