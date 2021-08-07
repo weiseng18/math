@@ -116,6 +116,71 @@ abstract class BaseMatrix {
       this.entries[addToIdx][colIdx] += this.entries[rowIdx][colIdx] * factor
     })
   }
+
+  /**
+   * Returns true if every entry in column colIdx is 0, false otherwise
+   * @param colIdx index of the column
+   */
+  isZeroColumn(colIdx: number) {
+    return range(this.rows).every(
+      (rowIdx) => this.entries[rowIdx][colIdx] === 0
+    )
+  }
+
+  /**
+   * Reduces the matrix to REF
+   */
+  toREF() {
+    let actions = [] // array of actions done during REF
+
+    let colIdx = 0 // leftmost nonzero column idx
+    let rowsDone = 0 // number of rows done
+
+    while (this.echelonStatus() === EchelonType.NONE) {
+      // find next nonzero column
+      let foundColumn = false
+      while (!foundColumn && colIdx < this.columns) {
+        if (this.isZeroColumn(colIdx)) colIdx++
+        else foundColumn = true
+      }
+
+      if (foundColumn) {
+        let firstEntryRowIdx = -1
+        // find first nonzero entry in column, that is excluding the done rows
+        for (let i = rowsDone; i < this.rows; i++)
+          if (this.entries[i][colIdx] !== 0) {
+            firstEntryRowIdx = i
+            break
+          }
+
+        // swap top row with this row
+        this.swapRows(rowsDone, firstEntryRowIdx)
+        actions.push({
+          action: "swap",
+          params: [rowsDone, firstEntryRowIdx],
+        })
+
+        // add multiple of top row to every other row below
+        const pivotValue = this.entries[rowsDone][colIdx]
+        for (let i = rowsDone + 1; i < this.rows; i++) {
+          const factor = (this.entries[i][colIdx] / pivotValue) * -1
+          this.addMultiple(rowsDone, factor, i)
+          actions.push({
+            action: "addMultiple",
+            params: [rowsDone, factor, i],
+          })
+        }
+
+        // mark as done
+        rowsDone++
+        colIdx++
+      } else {
+        break
+      }
+    }
+
+    return actions
+  }
 }
 
 class Matrix extends BaseMatrix {

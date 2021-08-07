@@ -186,4 +186,31 @@ export default () => {
       })
     })
   })
+
+  describe("toREF", () => {
+    it("should correctly reduce a matrix to REF", () => {
+      const matrices = [
+        [
+          [1, 2, 3],
+          [2, 3, 4],
+          [3, 4, 5],
+        ],
+        [
+          [1, 0, 0],
+          [0, 3, 0],
+          [0, 0, 2],
+        ],
+      ]
+      matrices.forEach((array) => {
+        const matrix = new Matrix({
+          rows: array.length,
+          columns: array[0].length,
+          entries: array,
+        })
+        const actions = matrix.toREF()
+        const res = matrix.echelonStatus()
+        chai.expect(res).to.not.equal(EchelonType.NONE)
+      })
+    })
+  })
 }
