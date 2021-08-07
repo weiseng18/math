@@ -206,12 +206,14 @@ abstract class BaseMatrix {
       if (colIdx !== -1) {
         const leadingVal = row[colIdx]
         const factor = 1 / leadingVal
-        this.multiplyRow(rowIdx, factor)
-        actions.push({
-          action: "multiplyRow",
-          params: [rowIdx, factor],
-          matrix: _.cloneDeep(this.entries),
-        })
+        if (factor !== 1) {
+          this.multiplyRow(rowIdx, factor)
+          actions.push({
+            action: "multiplyRow",
+            params: [rowIdx, factor],
+            matrix: _.cloneDeep(this.entries),
+          })
+        }
       }
     })
 
