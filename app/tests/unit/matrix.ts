@@ -114,5 +114,44 @@ export default () => {
         })
       })
     })
+    describe("swapRows", () => {
+      it("should swap rows correctly", () => {
+        const matrix = new Matrix({
+          rows: 3,
+          columns: 3,
+          entries: [
+            [1, 2, 3],
+            [1, 0, 0],
+            [0, 1, 0],
+          ],
+        })
+
+        // tests
+        const inputs = [
+          { rowOne: 0, rowTwo: 2 },
+          { rowOne: 1, rowTwo: 0 },
+        ]
+        const outputs = [
+          {
+            newRowOne: [0, 1, 0],
+            newRowTwo: [1, 2, 3],
+          },
+          {
+            newRowOne: [0, 1, 0],
+            newRowTwo: [1, 0, 0],
+          },
+        ]
+
+        inputs.forEach((options, idx) => {
+          matrix.swapRows(options.rowOne, options.rowTwo)
+          chai
+            .expect(matrix.entries[options.rowOne])
+            .to.eql(outputs[idx].newRowOne)
+          chai
+            .expect(matrix.entries[options.rowTwo])
+            .to.eql(outputs[idx].newRowTwo)
+        })
+      })
+    })
   })
 }

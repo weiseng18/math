@@ -92,6 +92,17 @@ abstract class BaseMatrix {
   multiplyRow(rowIdx: number, factor: number) {
     this.entries[rowIdx] = this.entries[rowIdx].map((one) => factor * one)
   }
+
+  /**
+   * Swaps rows i and j
+   * @param i row index number
+   * @param j row index number
+   */
+  swapRows(i: number, j: number) {
+    const tmp = this.entries[i]
+    this.entries[i] = this.entries[j]
+    this.entries[j] = tmp
+  }
 }
 
 class Matrix extends BaseMatrix {
