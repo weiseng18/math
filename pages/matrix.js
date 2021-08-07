@@ -13,6 +13,9 @@ const Page = () => {
   const [inputArray, setInputArray] = useState([[]]) // matrix from processed query
   const [answer, setAnswer] = useState("") // Latex string
 
+  // only for rref
+  const [rrefActions, setRrefActions] = useState([])
+
   const handleChange = (e) => {
     setError("")
     setQuery(e.target.value)
@@ -52,6 +55,7 @@ const Page = () => {
           })
           setCommand("\\mathrm{rref}")
           setAnswer(convert2DArrayToMatrix(res.data.matrix))
+          setRrefActions(res.data.actions)
           break
       }
       setInputArray(JSON.parse(matrix))
@@ -100,10 +104,34 @@ const Page = () => {
               </Text>
               <Text>${answer}$</Text>
             </HStack>
+            {rrefActions.length > 0 && rrefSteps(rrefActions)}
           </VStack>
         )}
       </VStack>
     </Flex>
+  )
+}
+
+const rrefSteps = (rrefActions) => {
+  const descriptionText = (action, params) => {
+    if (action === "none") return "Begin with"
+    else if (action === "addMultiple")
+      return `Add ${params[1]} times of row ${params[0]} to row ${params[2]}`
+    else if (action === "swap")
+      return `Swap row ${params[0]} with row ${params[1]}`
+    else if (action === "multiplyRow")
+      return `Multiply row ${params[0]} by factor ${params[1]}`
+  }
+
+  return (
+    <VStack alignItems="flex-start" w="100%">
+      {rrefActions.map((one) => (
+        <>
+          <Text>{descriptionText(one.action, one.params)}</Text>
+          <Text alignSelf="center">${convert2DArrayToMatrix(one.matrix)}$</Text>
+        </>
+      ))}
+    </VStack>
   )
 }
 
