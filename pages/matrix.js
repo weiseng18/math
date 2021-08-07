@@ -25,13 +25,23 @@ const Page = () => {
     if (query === "") return
 
     try {
-      const res = await axios.get("/api/matrix/determinant", {
-        params: {
-          matrix: query,
-        },
-      })
+      // split query into action and matrix
+      const arr = query.split(" ")
+      const action = arr.shift()
+      const matrix = arr.join(" ")
 
-      setInputArray(JSON.parse(query))
+      let res
+      switch (action) {
+        case "determinant":
+        case "det":
+          res = await axios.get("/api/matrix/determinant", {
+            params: {
+              matrix,
+            },
+          })
+          break
+      }
+      setInputArray(JSON.parse(matrix))
       setAnswer(res.data)
 
       // force math typesetting
