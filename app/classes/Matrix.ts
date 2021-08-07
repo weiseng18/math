@@ -50,10 +50,11 @@ abstract class BaseMatrix {
     // Check 1a: if there are still non-zero rows, this means they are not at the bottom, so return NONE
     if (leadingIndices.some((one) => one === -1)) return EchelonType.NONE
 
-    // Check 1b: if leadingEntryIndices not in non-decreasing order, return NONE
+    // Check 1b: if leadingEntryIndices not in increasing order, return NONE
     let idx = 1
     while (idx < this.rows) {
-      if (leadingIndices[idx - 1] > leadingIndices[idx]) return EchelonType.NONE
+      if (leadingIndices[idx - 1] >= leadingIndices[idx])
+        return EchelonType.NONE
       idx++
     }
 
