@@ -10,7 +10,7 @@ const Page = () => {
   const [error, setError] = useState("") // error regarding query
 
   const [command, setCommand] = useState("") // action from processed query
-  const [inputArray, setInputArray] = useState("") // matrix from processed query
+  const [inputArray, setInputArray] = useState([[]]) // matrix from processed query
   const [answer, setAnswer] = useState("")
 
   const handleChange = (e) => {
