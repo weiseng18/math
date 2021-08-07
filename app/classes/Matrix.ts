@@ -3,6 +3,8 @@ import { range } from "../utils/misc"
 import { EchelonType } from "../types/Matrix"
 import { leadingEntryIndex } from "../utils/Matrix"
 
+import * as _ from "lodash"
+
 interface IMatrix {
   rows: number
   columns: number
@@ -136,7 +138,7 @@ abstract class BaseMatrix {
     actions.push({
       action: "none",
       params: [],
-      matrix: this.entries,
+      matrix: _.cloneDeep(this.entries),
     })
 
     let colIdx = 0 // leftmost nonzero column idx
@@ -165,7 +167,7 @@ abstract class BaseMatrix {
           actions.push({
             action: "swap",
             params: [rowsDone, firstEntryRowIdx],
-            matrix: this.entries,
+            matrix: _.cloneDeep(this.entries),
           })
         }
 
@@ -177,7 +179,7 @@ abstract class BaseMatrix {
           actions.push({
             action: "addMultiple",
             params: [rowsDone, factor, i],
-            matrix: this.entries,
+            matrix: _.cloneDeep(this.entries),
           })
         }
 
@@ -208,7 +210,7 @@ abstract class BaseMatrix {
         actions.push({
           action: "multiplyRow",
           params: [rowIdx, factor],
-          matrix: this.entries,
+          matrix: _.cloneDeep(this.entries),
         })
       }
     })
@@ -225,7 +227,7 @@ abstract class BaseMatrix {
           actions.push({
             action: "addMultiple",
             params: [i, factor, j],
-            matrix: this.entries,
+            matrix: _.cloneDeep(this.entries),
           })
         }
       }
