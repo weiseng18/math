@@ -21,17 +21,15 @@ export default () => {
         ],
       ]
 
-      const res = matrices.every((arr) => {
+      matrices.forEach((arr) => {
         const matrix = new Matrix({
           rows: arr.length,
           columns: arr[0].length,
           entries: arr,
         })
         const status = matrix.echelonStatus()
-        return status == EchelonType.RREF
+        chai.expect(status).to.equal(EchelonType.RREF)
       })
-
-      chai.expect(res).to.equal(true)
     })
     it("should return REF correctly", () => {
       const matrices = [
@@ -49,17 +47,15 @@ export default () => {
         ],
       ]
 
-      const res = matrices.every((arr) => {
+      matrices.forEach((arr) => {
         const matrix = new Matrix({
           rows: arr.length,
           columns: arr[0].length,
           entries: arr,
         })
         const status = matrix.echelonStatus()
-        return status == EchelonType.REF
+        chai.expect(status).to.equal(EchelonType.REF)
       })
-
-      chai.expect(res).to.equal(true)
     })
     it("should return NONE correctly", () => {
       const matrices = [
@@ -75,17 +71,15 @@ export default () => {
         ],
       ]
 
-      const res = matrices.every((arr) => {
+      matrices.forEach((arr) => {
         const matrix = new Matrix({
           rows: arr.length,
           columns: arr[0].length,
           entries: arr,
         })
         const status = matrix.echelonStatus()
-        return status == EchelonType.NONE
+        chai.expect(status).to.equal(EchelonType.NONE)
       })
-
-      chai.expect(res).to.equal(true)
     })
   })
 }
