@@ -1,3 +1,8 @@
+import { range } from "../utils/misc"
+
+import { EchelonType } from "../types/Matrix"
+import { leadingEntryIndex } from "../utils/Matrix"
+
 interface IMatrix {
   rows: number
   columns: number
@@ -22,6 +27,61 @@ abstract class BaseMatrix {
       for (let i = 0; i < this.rows; i++) tmp.push([...row])
       this.entries = tmp
     }
+  }
+
+  /**
+   * Returns whether a matrix is in RREF, REF, or NONE.
+   */
+  echelonStatus(): EchelonType {
+    // obtain array of leading entry indices
+    let leadingIndices: number[] = []
+    this.entries.forEach((row) => {
+      const leadingIndex = leadingEntryIndex(row)
+      leadingIndices.push(leadingIndex)
+    })
+
+    // remove all end -1s as they are extra zero rows at the bottom of the matrix
+    while (
+      leadingIndices.length > 0 &&
+      leadingIndices[leadingIndices.length - 1] === -1
+    )
+      leadingIndices.pop()
+
+    // Check 1a: if there are still non-zero rows, this means they are not at the bottom, so return NONE
+    if (leadingIndices.some((one) => one === -1)) return EchelonType.NONE
+
+    // Check 1b: if leadingEntryIndices not in non-decreasing order, return NONE
+    let idx = 1
+    while (idx < this.rows) {
+      if (leadingIndices[idx - 1] > leadingIndices[idx]) return EchelonType.NONE
+      idx++
+    }
+
+    // reaching here means is either REF or RREF
+
+    // Check 2: if leadingIndices has no more entries (i.e. was all -1s), this is a zero matrix, and is RREF
+    if (leadingIndices.length === 0) return EchelonType.RREF
+
+    // Check 3: For RREF, all leading entries of nonzero rows should be 1
+    const allLeadingOne = leadingIndices.every(
+      (colIdx, rowIdx) => this.entries[rowIdx][colIdx] === 1
+    )
+    if (!allLeadingOne) return EchelonType.REF
+
+    // Check 4: For RREF, the only nonzero value in a pivot column is the pivot point
+    const pivotColumnsCheck = leadingIndices.every((colIdx, idx) => {
+      const res = range(this.rows).every((rowIdx) => {
+        // if the leading index found previously belongs to this row
+        if (idx == rowIdx) return true
+
+        return this.entries[rowIdx][colIdx] === 0
+      })
+      return res
+    })
+    if (!pivotColumnsCheck) return EchelonType.REF
+
+    // reaching here means RREF
+    return EchelonType.RREF
   }
 }
 
