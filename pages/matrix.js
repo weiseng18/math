@@ -27,9 +27,6 @@ const Page = () => {
   // only for rref
   const [rrefActions, setRrefActions] = useState([])
 
-  // only when router.query is defined, and want to trigger submit after loading router.query into query
-  const [triggerSubmit, setTriggerSubmit] = useState(false)
-
   const router = useRouter()
 
   const handleChange = (e) => {
@@ -41,15 +38,15 @@ const Page = () => {
     if (e.keyCode == 13 || e.key == "Enter") handleSubmit()
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (passedQuery = "") => {
     // empty query
-    if (query === "") return
+    if (query === "" && passedQuery === "") return
 
     try {
       setLoading(true)
 
       // split query into action and matrix
-      const arr = query.split(" ")
+      let arr = query === "" ? passedQuery.split(" ") : query.split(" ")
       const action = arr.shift()
       const matrix = arr.join(" ")
 
@@ -94,24 +91,19 @@ const Page = () => {
   }
 
   useEffect(() => {
-    if (router.query.action && router.query.matrix) {
-      const command = router.query.action
-      const matrix = router.query.matrix
-      setQuery(command + " " + matrix)
-      setTriggerSubmit(true)
-    } else {
-      setQuery("")
-      setInputArray([[]])
-      setAnswer("")
+    if (query === "") {
+      if (router.query.action && router.query.matrix) {
+        const command = router.query.action
+        const matrix = router.query.matrix
+        setQuery(command + " " + matrix)
+        handleSubmit(command + " " + matrix)
+      } else {
+        setQuery("")
+        setInputArray([[]])
+        setAnswer("")
+      }
     }
   }, [router.query])
-
-  useEffect(() => {
-    if (triggerSubmit && query) {
-      handleSubmit()
-      setTriggerSubmit(false)
-    }
-  }, [query])
 
   useEffect(() => {
     setLoading(false)
@@ -142,7 +134,7 @@ const Page = () => {
             placeholder="Put in your query"
           />
           <Button
-            disabled={error !== "" || !query.length || triggerSubmit || loading}
+            disabled={error !== "" || !query.length || loading}
             onClick={handleSubmit}
           >
             Submit
