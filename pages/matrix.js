@@ -153,7 +153,7 @@ const rrefSteps = (rrefActions) => {
   }
 
   return (
-    <VStack alignItems="flex-start" w="100%">
+    <VStack spacing={4} alignItems="flex-start" w="100%">
       {rrefActions.map((one) => (
         <>
           <HStack spacing={1} justifyContent="center">
