@@ -79,6 +79,11 @@ const Page = () => {
             query: { action: "rref", matrix },
           })
           break
+        default:
+          setLoading(false)
+          setAnswer("")
+          setRrefActions([])
+          throw new Error("Unrecognized command")
       }
       setInputArray(JSON.parse(matrix))
 
