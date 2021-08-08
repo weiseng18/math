@@ -1,6 +1,6 @@
 import {
   Button,
-  Flex,
+  Container,
   HStack,
   Input,
   Spinner,
@@ -110,21 +110,8 @@ const Page = () => {
   }, [])
 
   return (
-    <Flex
-      h="100vh"
-      w="100vw"
-      justifyContent="center"
-      alignItems="center"
-      mx="auto"
-    >
-      <VStack
-        spacing={4}
-        w="100vw"
-        px="15vw"
-        py="60px"
-        h="100%"
-        overflowY="auto"
-      >
+    <Container maxW="100vw" margin="0" padding="0" overflowX="hidden">
+      <VStack spacing={4} w="100vw" px="15vw" py="40px" h="100%">
         <HStack spacing={4} w="100%">
           <Input
             isRequired
@@ -175,7 +162,7 @@ const Page = () => {
           </VStack>
         )}
       </VStack>
-    </Flex>
+    </Container>
   )
 }
 
