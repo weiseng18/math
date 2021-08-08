@@ -124,7 +124,7 @@ const Page = () => {
             placeholder="Put in your query"
           />
           <Button
-            disabled={error !== "" || !query.length}
+            disabled={error !== "" || !query.length || triggerSubmit}
             onClick={handleSubmit}
           >
             Submit
