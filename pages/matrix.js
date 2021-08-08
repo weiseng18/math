@@ -172,7 +172,7 @@ const rrefSteps = (rrefActions) => {
           `$${-params[1]}$`,
           "times of row",
           `$${params[0]}$`,
-          "to row",
+          "from row",
           `$${params[2]}$`,
           `$(\\text{or }R_${params[2]} - ${-params[1]}R_${params[0]})$`,
         ]
