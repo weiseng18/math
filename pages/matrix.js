@@ -130,11 +130,29 @@ const rrefSteps = (rrefActions) => {
         `$${params[0]}$`,
         "to row",
         `$${params[2]}$`,
+        "or",
+        `$(R_${params[2]} ${params[1] < 0 ? "-" : "+"} ${Math.abs(
+          params[1]
+        )}R_${params[0]})$`,
       ]
     else if (action === "swap")
-      return ["Swap row", `$${params[0]}$`, "with row", `$${params[1]}$`]
+      return [
+        "Swap row",
+        `$${params[0]}$`,
+        "with row",
+        `$${params[1]}$`,
+        "or",
+        `$(R_${params[0]} \\leftrightarrow R_${params[1]})$`,
+      ]
     else if (action === "multiplyRow")
-      return ["Multiply row", `$${params[0]}$`, "by factor", `$${params[1]}$`]
+      return [
+        "Multiply row",
+        `$${params[0]}$`,
+        "by factor",
+        `$${params[1]}$`,
+        "or",
+        `$(${params[1]}R_${params[0]})$`,
+      ]
   }
 
   return (
