@@ -181,36 +181,36 @@ const rrefSteps = (rrefActions) => {
           "Add",
           `$${params[1]}$`,
           "times of row",
-          `$${params[0]}$`,
+          `$${params[0] + 1}$`,
           "to row",
-          `$${params[2]}$`,
-          `$(\\text{or }R_${params[2]} + ${params[1]}R_${params[0]})$`,
+          `$${params[2] + 1}$`,
+          `$(\\text{or }R_${params[2] + 1} + ${params[1]}R_${params[0] + 1})$`,
         ]
       else
         return [
           "Subtract",
           `$${-params[1]}$`,
           "times of row",
-          `$${params[0]}$`,
+          `$${params[0] + 1}$`,
           "from row",
-          `$${params[2]}$`,
-          `$(\\text{or }R_${params[2]} - ${-params[1]}R_${params[0]})$`,
+          `$${params[2] + 1}$`,
+          `$(\\text{or }R_${params[2] + 1} - ${-params[1]}R_${params[0] + 1})$`,
         ]
     } else if (action === "swap")
       return [
         "Swap row",
-        `$${params[0]}$`,
+        `$${params[0] + 1}$`,
         "with row",
-        `$${params[1]}$`,
-        `$(\\text{or }R_${params[0]} \\leftrightarrow R_${params[1]})$`,
+        `$${params[1] + 1}$`,
+        `$(\\text{or }R_${params[0] + 1} \\leftrightarrow R_${params[1] + 1})$`,
       ]
     else if (action === "multiplyRow")
       return [
         "Multiply row",
-        `$${params[0]}$`,
+        `$${params[0] + 1}$`,
         "by factor",
-        `$${params[1]}$`,
-        `$(\\text{or }${params[1]}R_${params[0]})$`,
+        `$${params[1] + 1}$`,
+        `$(\\text{or }${params[1] + 1}R_${params[0] + 1})$`,
       ]
   }
 
