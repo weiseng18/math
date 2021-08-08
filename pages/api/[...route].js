@@ -5,7 +5,11 @@ const app = require("express")()
 
 app.get("/api/test", Test.test)
 
+/**
+ * Calculates the determinant of a square matrix
+ *
+ * @param {*} matrix 2D Javascript array
+ */
 app.get("/api/matrix/determinant", Matrix.calcDeterminant)
-app.get("/api/matrix/rref", Matrix.reduceRREF)
 
 module.exports = app

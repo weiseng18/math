@@ -77,7 +77,7 @@ describe("API tests", () => {
           chai.expect(res.body).to.equal(-2)
         })
     })
-    it("should return determinant of 3 by 3 matrix", async () => {
+    it("should not return determinant of 3 by 3 matrix", async () => {
       await chai
         .request(url)
         .get(route)
@@ -85,8 +85,8 @@ describe("API tests", () => {
           matrix: "[[1,2,3],[4,5,6],[7,8,9]]",
         })
         .then((res) => {
-          chai.expect(res.status).to.equal(200)
-          chai.expect(res.body).to.equal(0)
+          chai.expect(res.status).to.equal(500)
+          chai.expect(res.body.message).to.equal("Unsupported")
         })
     })
     it("should obtain 500 for 3 by 2 matrix", async () => {
