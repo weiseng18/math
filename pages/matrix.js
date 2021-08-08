@@ -10,6 +10,8 @@ const Page = () => {
   const [query, setQuery] = useState("") // text in the input
   const [error, setError] = useState("") // error regarding query
 
+  const [loading, setLoading] = useState(true) // if page is loading or handleSubmit is running
+
   const [command, setCommand] = useState("") // action from processed query
   const [inputArray, setInputArray] = useState([[]]) // matrix from processed query
   const [answer, setAnswer] = useState("") // Latex string
@@ -36,6 +38,8 @@ const Page = () => {
     if (query === "") return
 
     try {
+      setLoading(true)
+
       // split query into action and matrix
       const arr = query.split(" ")
       const action = arr.shift()
@@ -74,6 +78,8 @@ const Page = () => {
 
       // force math typesetting
       MathJax.typeset()
+
+      setLoading(false)
     } catch (err) {
       setError(err.message)
     }
@@ -98,6 +104,10 @@ const Page = () => {
       setTriggerSubmit(false)
     }
   }, [query])
+
+  useEffect(() => {
+    setLoading(false)
+  }, [])
 
   return (
     <Flex
@@ -124,7 +134,7 @@ const Page = () => {
             placeholder="Put in your query"
           />
           <Button
-            disabled={error !== "" || !query.length || triggerSubmit}
+            disabled={error !== "" || !query.length || triggerSubmit || loading}
             onClick={handleSubmit}
           >
             Submit
