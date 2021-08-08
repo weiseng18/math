@@ -114,20 +114,31 @@ const Page = () => {
 
 const rrefSteps = (rrefActions) => {
   const descriptionText = (action, params) => {
-    if (action === "none") return "Begin with"
+    if (action === "none") return ["Begin with"]
     else if (action === "addMultiple")
-      return `Add $${params[1]}$ times of row $${params[0]}$ to row $${params[2]}$`
+      return [
+        "Add",
+        `$${params[1]}$`,
+        "times of row",
+        `$${params[0]}$`,
+        "to row",
+        `$${params[2]}$`,
+      ]
     else if (action === "swap")
-      return `Swap row $${params[0]}$ with row $${params[1]}$`
+      return ["Swap row", `$${params[0]}$`, "with row", `$${params[1]}$`]
     else if (action === "multiplyRow")
-      return `Multiply row $${params[0]}$ by factor $${params[1]}$`
+      return ["Multiply row", `$${params[0]}$`, "by factor", `$${params[1]}$`]
   }
 
   return (
     <VStack alignItems="flex-start" w="100%">
       {rrefActions.map((one) => (
         <>
-          <Text>{descriptionText(one.action, one.params)}</Text>
+          <HStack spacing={1} justifyContent="center">
+            {descriptionText(one.action, one.params).map((two) => (
+              <Text>{two}</Text>
+            ))}
+          </HStack>
           <Text alignSelf="center">${convert2DArrayToMatrix(one.matrix)}$</Text>
         </>
       ))}
