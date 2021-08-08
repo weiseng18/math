@@ -75,7 +75,14 @@ const Page = () => {
       alignItems="center"
       mx="auto"
     >
-      <VStack spacing={4} w="100vw" px="15vw" h="100%" overflowY="auto">
+      <VStack
+        spacing={4}
+        w="100vw"
+        px="15vw"
+        py="60px"
+        h="100%"
+        overflowY="auto"
+      >
         <HStack spacing={4} w="100%" my="auto">
           <Input
             isRequired
@@ -92,7 +99,7 @@ const Page = () => {
         </HStack>
         {error !== "" && <Text color="crimson">Error: {error}</Text>}
         {answer !== "" && (
-          <VStack key={inputArray.join()} spacing={8} pt={8}>
+          <VStack key={inputArray.join()} spacing={8} pt={8} w="50%">
             <HStack spacing={1}>
               <Text>Your input is interpreted as:</Text>
               <Text>${convert2DArrayToMatrix(inputArray)}$</Text>
