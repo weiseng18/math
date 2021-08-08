@@ -61,6 +61,7 @@ const Page = () => {
           })
           setCommand("\\mathrm{det}")
           setAnswer(res.data)
+          setRrefActions([])
           Router.push({
             query: { action: "det", matrix },
           })
@@ -141,7 +142,7 @@ const Page = () => {
         )}
         {answer !== "" && (
           <VStack
-            key={inputArray.join()}
+            key={inputArray.join() + command}
             spacing={8}
             pt={8}
             w="100%"
