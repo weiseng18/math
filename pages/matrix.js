@@ -122,19 +122,28 @@ const Page = () => {
 const rrefSteps = (rrefActions) => {
   const descriptionText = (action, params) => {
     if (action === "none") return ["Begin with"]
-    else if (action === "addMultiple")
-      return [
-        "Add",
-        `$${params[1]}$`,
-        "times of row",
-        `$${params[0]}$`,
-        "to row",
-        `$${params[2]}$`,
-        `$(\\text{or }R_${params[2]} ${params[1] < 0 ? "-" : "+"} ${Math.abs(
-          params[1]
-        )}R_${params[0]})$`,
-      ]
-    else if (action === "swap")
+    else if (action === "addMultiple") {
+      if (params[1] > 0)
+        return [
+          "Add",
+          `$${params[1]}$`,
+          "times of row",
+          `$${params[0]}$`,
+          "to row",
+          `$${params[2]}$`,
+          `$(\\text{or }R_${params[2]} + ${params[1]}R_${params[0]})$`,
+        ]
+      else
+        return [
+          "Subtract",
+          `$${-params[1]}$`,
+          "times of row",
+          `$${params[0]}$`,
+          "to row",
+          `$${params[2]}$`,
+          `$(\\text{or }R_${params[2]} - ${-params[1]}R_${params[0]})$`,
+        ]
+    } else if (action === "swap")
       return [
         "Swap row",
         `$${params[0]}$`,
