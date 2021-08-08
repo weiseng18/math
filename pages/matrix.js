@@ -153,7 +153,13 @@ const Page = () => {
           </HStack>
         )}
         {answer !== "" && (
-          <VStack key={inputArray.join()} spacing={8} pt={8} w="100%">
+          <VStack
+            key={inputArray.join()}
+            spacing={8}
+            pt={8}
+            w="100%"
+            maxW="600px"
+          >
             <HStack spacing={1}>
               <Text>Your input is interpreted as:</Text>
               <Text>${convert2DArrayToMatrix(inputArray)}$</Text>
