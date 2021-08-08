@@ -1,4 +1,12 @@
-import { Button, Flex, HStack, Input, Text, VStack } from "@chakra-ui/react"
+import {
+  Button,
+  Flex,
+  HStack,
+  Input,
+  Spinner,
+  Text,
+  VStack,
+} from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 
 import Router, { useRouter } from "next/router"
@@ -141,6 +149,17 @@ const Page = () => {
           </Button>
         </HStack>
         {error !== "" && <Text color="crimson">Error: {error}</Text>}
+        {loading && (
+          <HStack pt={4}>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </HStack>
+        )}
         {answer !== "" && (
           <VStack key={inputArray.join()} spacing={8} pt={8} w="50%">
             <HStack spacing={1}>
