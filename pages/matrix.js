@@ -130,8 +130,7 @@ const rrefSteps = (rrefActions) => {
         `$${params[0]}$`,
         "to row",
         `$${params[2]}$`,
-        "or",
-        `$(R_${params[2]} ${params[1] < 0 ? "-" : "+"} ${Math.abs(
+        `$(\\text{or }R_${params[2]} ${params[1] < 0 ? "-" : "+"} ${Math.abs(
           params[1]
         )}R_${params[0]})$`,
       ]
@@ -141,8 +140,7 @@ const rrefSteps = (rrefActions) => {
         `$${params[0]}$`,
         "with row",
         `$${params[1]}$`,
-        "or",
-        `$(R_${params[0]} \\leftrightarrow R_${params[1]})$`,
+        `$(\\text{or }R_${params[0]} \\leftrightarrow R_${params[1]})$`,
       ]
     else if (action === "multiplyRow")
       return [
@@ -150,8 +148,7 @@ const rrefSteps = (rrefActions) => {
         `$${params[0]}$`,
         "by factor",
         `$${params[1]}$`,
-        "or",
-        `$(${params[1]}R_${params[0]})$`,
+        `$(\\text{or }${params[1]}R_${params[0]})$`,
       ]
   }
 
