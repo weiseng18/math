@@ -153,7 +153,7 @@ const Page = () => {
           </HStack>
         )}
         {answer !== "" && (
-          <VStack key={inputArray.join()} spacing={8} pt={8} w="50%">
+          <VStack key={inputArray.join()} spacing={8} pt={8} w="100%">
             <HStack spacing={1}>
               <Text>Your input is interpreted as:</Text>
               <Text>${convert2DArrayToMatrix(inputArray)}$</Text>
@@ -219,7 +219,12 @@ const rrefSteps = (rrefActions) => {
     <VStack spacing={4} alignItems="flex-start" w="100%">
       {rrefActions.map((one) => (
         <>
-          <HStack spacing={1} justifyContent="center">
+          <HStack
+            flexWrap="wrap"
+            spacing={1}
+            justifyContent="flex-start"
+            lineHeight="2em"
+          >
             {descriptionText(one.action, one.params).map((two) => (
               <Text>{two}</Text>
             ))}
