@@ -133,7 +133,7 @@ const Page = () => {
         h="100%"
         overflowY="auto"
       >
-        <HStack spacing={4} w="100%" my="auto">
+        <HStack spacing={4} w="100%">
           <Input
             isRequired
             onChange={handleChange}
@@ -150,7 +150,7 @@ const Page = () => {
         </HStack>
         {error !== "" && <Text color="crimson">Error: {error}</Text>}
         {loading && (
-          <HStack pt={4}>
+          <HStack>
             <Spinner
               thickness="4px"
               speed="0.65s"
