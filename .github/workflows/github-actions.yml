@@ -21,7 +21,7 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - run: npm ci
-      - run: npm run test
+      - run: npm run test-ci
   test-unit:
     name: test-unit
     runs-on: ubuntu-20.04
@@ -41,4 +41,4 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - run: npm ci
-      - run: npm run test-unit
+      - run: npm run test-unit-ci
