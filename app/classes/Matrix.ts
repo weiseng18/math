@@ -120,12 +120,13 @@ abstract class BaseMatrix {
   }
 
   /**
-   * Returns true if every entry in column colIdx is 0, false otherwise
+   * Returns true if every entry in column colIdx, below and inclusive of row startRow is 0, false otherwise
+   * @param startRow highest row to start checking from
    * @param colIdx index of the column
    */
-  isZeroColumn(colIdx: number) {
-    return range(this.rows).every(
-      (rowIdx) => this.entries[rowIdx][colIdx] === 0
+  isZeroColumnBelowRow(colIdx: number, startRow: number = 0) {
+    return range(this.rows - startRow).every(
+      (rowIdx) => this.entries[rowIdx + startRow][colIdx] === 0
     )
   }
 
@@ -148,7 +149,8 @@ abstract class BaseMatrix {
       // find next nonzero column
       let foundColumn = false
       while (!foundColumn && colIdx < this.columns) {
-        if (this.isZeroColumn(colIdx)) colIdx++
+        // remember to exclude the top rows as they are done
+        if (this.isZeroColumnBelowRow(colIdx, rowsDone)) colIdx++
         else foundColumn = true
       }
 
