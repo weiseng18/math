@@ -1,6 +1,7 @@
 import { Button, Flex, HStack, Input, Text, VStack } from "@chakra-ui/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
+import Router, { useRouter } from "next/router"
 import axios from "axios"
 
 import { convert2DArrayToMatrix } from "../utils"
@@ -15,6 +16,11 @@ const Page = () => {
 
   // only for rref
   const [rrefActions, setRrefActions] = useState([])
+
+  // only when router.query is defined, and want to trigger submit after loading router.query into query
+  const [triggerSubmit, setTriggerSubmit] = useState(false)
+
+  const router = useRouter()
 
   const handleChange = (e) => {
     setError("")
@@ -46,6 +52,9 @@ const Page = () => {
           })
           setCommand("\\mathrm{det}")
           setAnswer(res.data)
+          Router.push({
+            query: { action: "det", matrix },
+          })
           break
         case "rref":
           res = await axios.get("/api/matrix/rref", {
@@ -56,6 +65,9 @@ const Page = () => {
           setCommand("\\mathrm{rref}")
           setAnswer(convert2DArrayToMatrix(res.data.matrix))
           setRrefActions(res.data.actions)
+          Router.push({
+            query: { action: "rref", matrix },
+          })
           break
       }
       setInputArray(JSON.parse(matrix))
@@ -66,6 +78,26 @@ const Page = () => {
       setError(err.message)
     }
   }
+
+  useEffect(() => {
+    if (router.query.action && router.query.matrix) {
+      const command = router.query.action
+      const matrix = router.query.matrix
+      setQuery(command + " " + matrix)
+      setTriggerSubmit(true)
+    } else {
+      setQuery("")
+      setInputArray([[]])
+      setAnswer("")
+    }
+  }, [router.query])
+
+  useEffect(() => {
+    if (triggerSubmit && query) {
+      handleSubmit()
+      setTriggerSubmit(false)
+    }
+  }, [query])
 
   return (
     <Flex
@@ -88,6 +120,7 @@ const Page = () => {
             isRequired
             onChange={handleChange}
             onKeyDown={handleKeydown}
+            value={query}
             placeholder="Put in your query"
           />
           <Button
