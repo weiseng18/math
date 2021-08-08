@@ -73,10 +73,10 @@ const Page = () => {
       w="100vw"
       justifyContent="center"
       alignItems="center"
-      my="100px"
+      mx="auto"
     >
-      <VStack spacing={4} w="60%">
-        <HStack spacing={4} w="100%">
+      <VStack spacing={4} w="100vw" px="15vw" h="100%" overflowY="auto">
+        <HStack spacing={4} w="100%" my="auto">
           <Input
             isRequired
             onChange={handleChange}
