@@ -27,8 +27,9 @@ const Page = () => {
   const [inputArray, setInputArray] = useState([[]]) // matrix from processed query
   const [answer, setAnswer] = useState("") // Latex string
 
-  // only for rref
-  const [rrefActions, setRrefActions] = useState([])
+  // only for rref or inverse
+  // holds the data for intermediate steps
+  const [actions, setActions] = useState([])
 
   const router = useRouter()
 
@@ -64,7 +65,7 @@ const Page = () => {
           })
           setCommand("\\mathrm{det}")
           setAnswer(res.data)
-          setRrefActions([])
+          setActions([])
           Router.push({
             query: { action: "det", matrix },
           })
@@ -78,7 +79,7 @@ const Page = () => {
           })
           setCommand("\\mathrm{inverse}")
           setAnswer(convert2DArrayToMatrix(res.data.matrix))
-          setRrefActions(res.data.actions)
+          setActions(res.data.actions)
           Router.push({
             query: { action: "inverse", matrix },
           })
@@ -91,7 +92,7 @@ const Page = () => {
           })
           setCommand("\\mathrm{rref}")
           setAnswer(convert2DArrayToMatrix(res.data.matrix))
-          setRrefActions(res.data.actions)
+          setActions(res.data.actions)
           Router.push({
             query: { action: "rref", matrix },
           })
@@ -99,7 +100,7 @@ const Page = () => {
         default:
           setLoading(false)
           setAnswer("")
-          setRrefActions([])
+          setActions([])
           throw new Error("Unrecognized command")
       }
       setInputArray(JSON.parse(matrix))
@@ -183,12 +184,12 @@ const Page = () => {
             </HStack>
             {router.query.action &&
               router.query.action === "rref" &&
-              rrefActions.length > 0 &&
-              rrefSteps(rrefActions)}
+              actions.length > 0 &&
+              rrefSteps(actions)}
             {router.query.action &&
               router.query.action === "inverse" &&
-              rrefActions.length > 0 &&
-              inverseSteps(rrefActions)}
+              actions.length > 0 &&
+              inverseSteps(actions)}
           </VStack>
         )}
       </VStack>
