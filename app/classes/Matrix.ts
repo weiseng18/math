@@ -281,6 +281,19 @@ class SquareMatrix extends BaseMatrix {
 
     return determinant
   }
+
+  /**
+   * Checks if the matrix is the identity matrix.
+   * @returns boolean
+   */
+  isIdentity() {
+    for (let i = 0; i < this.rows; i++)
+      for (let j = 0; j < this.columns; j++) {
+        if (i == j && this.entries[i][j] !== 1) return false
+        else if (i != j && this.entries[i][j] !== 0) return false
+      }
+    return true
+  }
 }
 
 export { Matrix, SquareMatrix }
