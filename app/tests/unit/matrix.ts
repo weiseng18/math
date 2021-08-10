@@ -281,4 +281,44 @@ export default () => {
       })
     })
   })
+
+  describe("inverse", () => {
+    it("should return inverse correctly, for non-singular square matrices", () => {
+      const matrices = [
+        [
+          [1, 0, 0],
+          [0, 4, 0],
+          [0, 0, 2],
+        ],
+        [
+          [1, 2, 4],
+          [2, 3, 5],
+          [3, 4, 5],
+        ],
+      ]
+      const inverses = [
+        [
+          [1, 0, 0],
+          [0, 1 / 4, 0],
+          [0, 0, 1 / 2],
+        ],
+        [
+          [-5, 6, -2],
+          [5, -7, 3],
+          [-1, 2, -1],
+        ],
+      ]
+      matrices.forEach((arr, idx) => {
+        const matrix = new SquareMatrix({
+          rows: arr.length,
+          columns: arr[0].length,
+          entries: arr,
+        })
+        const actions = matrix.inverse()
+        // compare with the answer
+        const inverse = inverses[idx]
+        chai.expect(matrix.entries).to.eql(inverse)
+      })
+    })
+  })
 }

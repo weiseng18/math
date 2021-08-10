@@ -294,6 +294,57 @@ class SquareMatrix extends BaseMatrix {
       }
     return true
   }
+
+  /**
+   * Calculates the inverse matrix of the current matrix.
+   *
+   * It performs RREF on the current matrix, obtaining the actions array.
+   * The actions array describes the row operations done to perform RREF.
+   * The same actions are played onto an identity matrix, giving us the inverse matrix.
+   */
+  inverse() {
+    const rrefActions = this.toRREF()
+
+    // create identity matrix
+    const identity = new SquareMatrix({
+      rows: this.rows,
+      columns: this.columns,
+    })
+    range(this.rows).forEach((i) => {
+      identity.entries[i][i] = 1
+    })
+
+    // play the actions onto the identity matrix, while storing the intermediate states
+    let actions: {
+      inverse: number[][]
+      action: RowOperation
+      params: number[]
+      matrix: number[][]
+    }[] = []
+
+    rrefActions.forEach((step) => {
+      // what action to perform onto the identity matrix
+      const actionToPerform = step.action
+      const params = step.params
+      if (actionToPerform === RowOperation.ADD_MULTIPLE) {
+        identity.addMultiple(params[0], params[1], params[2])
+      } else if (actionToPerform === RowOperation.MULTIPLY_ROW) {
+        identity.multiplyRow(params[0], params[1])
+      } else if (actionToPerform === RowOperation.SWAP) {
+        identity.swapRows(params[0], params[1])
+      }
+
+      // copied action object, adding inverse
+      const newAction = {
+        ...step,
+        inverse: identity.entries,
+      }
+      actions.push(newAction)
+    })
+
+    this.entries = identity.entries
+    return actions
+  }
 }
 
 export { Matrix, SquareMatrix }
