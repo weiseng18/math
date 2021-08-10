@@ -54,6 +54,9 @@ const Page = () => {
       const action = arr.shift()
       const matrix = arr.join(" ")
 
+      // to setInputArray(matrixArray) later
+      const matrixArray = JSON.parse(matrix)
+
       let res
       switch (action) {
         case "determinant":
@@ -63,7 +66,7 @@ const Page = () => {
               matrix,
             },
           })
-          setQuestion("\\mathrm{det}")
+          setQuestion("\\mathrm{det}" + convert2DArrayToMatrix(matrixArray))
           setAnswer(res.data)
           setActions([])
           Router.push({
@@ -77,7 +80,7 @@ const Page = () => {
               matrix,
             },
           })
-          setQuestion("\\mathrm{inverse}")
+          setQuestion("\\mathrm{inverse}" + convert2DArrayToMatrix(matrixArray))
           setAnswer(convert2DArrayToMatrix(res.data.matrix))
           setActions(res.data.actions)
           Router.push({
@@ -90,7 +93,7 @@ const Page = () => {
               matrix,
             },
           })
-          setQuestion("\\mathrm{rref}")
+          setQuestion("\\mathrm{rref}" + convert2DArrayToMatrix(matrixArray))
           setAnswer(convert2DArrayToMatrix(res.data.matrix))
           setActions(res.data.actions)
           Router.push({
@@ -103,7 +106,7 @@ const Page = () => {
           setActions([])
           throw new Error("Unrecognized command")
       }
-      setInputArray(JSON.parse(matrix))
+      setInputArray(matrixArray)
 
       // force math typesetting
       MathJax.typeset()
@@ -177,10 +180,7 @@ const Page = () => {
               <Text>${convert2DArrayToMatrix(inputArray)}$</Text>
             </HStack>
             <HStack spacing={1} bgColor="gray.200" padding={4}>
-              <Text>
-                ${question}
-                {convert2DArrayToMatrix(inputArray)} = $
-              </Text>
+              <Text>${question} = $</Text>
               <Text>${answer}$</Text>
             </HStack>
             {router.query.action &&
