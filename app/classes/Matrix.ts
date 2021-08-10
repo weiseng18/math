@@ -303,6 +303,10 @@ class SquareMatrix extends BaseMatrix {
    * The same actions are played onto an identity matrix, giving us the inverse matrix.
    */
   inverse() {
+    // if matrix is singular, throw error that the matrix is singular
+    if (this.calcDeterminant() === 0)
+      throw new Error("Matrix is singular; No inverse exists")
+
     const rrefActions = this.toRREF()
 
     // create identity matrix
