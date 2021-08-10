@@ -1,6 +1,6 @@
 import { range } from "../utils/misc"
 
-import { EchelonType } from "../types/Matrix"
+import { EchelonType, RowOperation } from "../types/Matrix"
 import { leadingEntryIndex } from "../utils/Matrix"
 
 import * as _ from "lodash"
@@ -137,7 +137,7 @@ abstract class BaseMatrix {
     let actions = [] // array of actions done during REF
 
     actions.push({
-      action: "none",
+      action: RowOperation.NONE,
       params: [],
       matrix: _.cloneDeep(this.entries),
     })
@@ -167,7 +167,7 @@ abstract class BaseMatrix {
         if (rowsDone !== firstEntryRowIdx) {
           this.swapRows(rowsDone, firstEntryRowIdx)
           actions.push({
-            action: "swap",
+            action: RowOperation.SWAP,
             params: [rowsDone, firstEntryRowIdx],
             matrix: _.cloneDeep(this.entries),
           })
@@ -179,7 +179,7 @@ abstract class BaseMatrix {
           const factor = (this.entries[i][colIdx] / pivotValue) * -1
           this.addMultiple(rowsDone, factor, i)
           actions.push({
-            action: "addMultiple",
+            action: RowOperation.ADD_MULTIPLE,
             params: [rowsDone, factor, i],
             matrix: _.cloneDeep(this.entries),
           })
@@ -211,7 +211,7 @@ abstract class BaseMatrix {
         if (factor !== 1) {
           this.multiplyRow(rowIdx, factor)
           actions.push({
-            action: "multiplyRow",
+            action: RowOperation.MULTIPLY_ROW,
             params: [rowIdx, factor],
             matrix: _.cloneDeep(this.entries),
           })
@@ -229,7 +229,7 @@ abstract class BaseMatrix {
         if (factor !== 0) {
           this.addMultiple(i, factor, j)
           actions.push({
-            action: "addMultiple",
+            action: RowOperation.ADD_MULTIPLE,
             params: [i, factor, j],
             matrix: _.cloneDeep(this.entries),
           })
