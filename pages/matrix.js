@@ -80,7 +80,7 @@ const Page = () => {
               matrix,
             },
           })
-          setQuestion("\\mathrm{inverse}" + convert2DArrayToMatrix(matrixArray))
+          setQuestion(convert2DArrayToMatrix(matrixArray) + "^{-1}")
           setAnswer(convert2DArrayToMatrix(res.data.matrix))
           setActions(res.data.actions)
           Router.push({
