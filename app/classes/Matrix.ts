@@ -341,7 +341,7 @@ class SquareMatrix extends BaseMatrix {
       // copied action object, adding inverse
       const newAction = {
         ...step,
-        inverse: identity.entries,
+        inverse: _.cloneDeep(identity.entries),
       }
       actions.push(newAction)
     })
