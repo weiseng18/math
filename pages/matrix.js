@@ -23,7 +23,7 @@ const Page = () => {
 
   const [loading, setLoading] = useState(true) // if page is loading or handleSubmit is running
 
-  const [command, setCommand] = useState("") // action from processed query
+  const [question, setQuestion] = useState("") // action from processed query
   const [inputArray, setInputArray] = useState([[]]) // matrix from processed query
   const [answer, setAnswer] = useState("") // Latex string
 
@@ -63,7 +63,7 @@ const Page = () => {
               matrix,
             },
           })
-          setCommand("\\mathrm{det}")
+          setQuestion("\\mathrm{det}")
           setAnswer(res.data)
           setActions([])
           Router.push({
@@ -77,7 +77,7 @@ const Page = () => {
               matrix,
             },
           })
-          setCommand("\\mathrm{inverse}")
+          setQuestion("\\mathrm{inverse}")
           setAnswer(convert2DArrayToMatrix(res.data.matrix))
           setActions(res.data.actions)
           Router.push({
@@ -90,7 +90,7 @@ const Page = () => {
               matrix,
             },
           })
-          setCommand("\\mathrm{rref}")
+          setQuestion("\\mathrm{rref}")
           setAnswer(convert2DArrayToMatrix(res.data.matrix))
           setActions(res.data.actions)
           Router.push({
@@ -166,7 +166,7 @@ const Page = () => {
         )}
         {answer !== "" && (
           <VStack
-            key={inputArray.join() + command}
+            key={inputArray.join() + question}
             spacing={8}
             pt={8}
             w="100%"
@@ -178,7 +178,7 @@ const Page = () => {
             </HStack>
             <HStack spacing={1} bgColor="gray.200" padding={4}>
               <Text>
-                ${command}
+                ${question}
                 {convert2DArrayToMatrix(inputArray)} = $
               </Text>
               <Text>${answer}$</Text>
