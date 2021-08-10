@@ -74,7 +74,7 @@ const calcInverse = (req: VercelRequest, res: VercelResponse) => {
     const actions = squareMatrix.inverse()
     res.json({
       actions,
-      matrix: matrix.entries,
+      matrix: squareMatrix.entries,
     })
   } catch (err) {
     res.status(500).json({ message: err.message })
