@@ -130,6 +130,8 @@ const Page = () => {
         setInputArray([[]])
         setAnswer("")
       }
+    } else {
+      MathJax.typeset()
     }
   }, [router.query])
 
