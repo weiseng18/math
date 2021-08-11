@@ -1,7 +1,8 @@
 import { range } from "../utils/misc"
 
-import { EchelonType } from "../types/Matrix"
+import { EchelonType, RowOperation } from "../types/Matrix"
 import { leadingEntryIndex } from "../utils/Matrix"
+import { HttpException } from "./Error"
 
 import * as _ from "lodash"
 
@@ -137,7 +138,7 @@ abstract class BaseMatrix {
     let actions = [] // array of actions done during REF
 
     actions.push({
-      action: "none",
+      action: RowOperation.NONE,
       params: [],
       matrix: _.cloneDeep(this.entries),
     })
@@ -167,7 +168,7 @@ abstract class BaseMatrix {
         if (rowsDone !== firstEntryRowIdx) {
           this.swapRows(rowsDone, firstEntryRowIdx)
           actions.push({
-            action: "swap",
+            action: RowOperation.SWAP,
             params: [rowsDone, firstEntryRowIdx],
             matrix: _.cloneDeep(this.entries),
           })
@@ -179,7 +180,7 @@ abstract class BaseMatrix {
           const factor = (this.entries[i][colIdx] / pivotValue) * -1
           this.addMultiple(rowsDone, factor, i)
           actions.push({
-            action: "addMultiple",
+            action: RowOperation.ADD_MULTIPLE,
             params: [rowsDone, factor, i],
             matrix: _.cloneDeep(this.entries),
           })
@@ -211,7 +212,7 @@ abstract class BaseMatrix {
         if (factor !== 1) {
           this.multiplyRow(rowIdx, factor)
           actions.push({
-            action: "multiplyRow",
+            action: RowOperation.MULTIPLY_ROW,
             params: [rowIdx, factor],
             matrix: _.cloneDeep(this.entries),
           })
@@ -229,7 +230,7 @@ abstract class BaseMatrix {
         if (factor !== 0) {
           this.addMultiple(i, factor, j)
           actions.push({
-            action: "addMultiple",
+            action: RowOperation.ADD_MULTIPLE,
             params: [i, factor, j],
             matrix: _.cloneDeep(this.entries),
           })
@@ -250,7 +251,7 @@ class Matrix extends BaseMatrix {
 class SquareMatrix extends BaseMatrix {
   constructor(props: IMatrix) {
     if (props.rows != props.columns)
-      throw new Error("Row and column counts do not match")
+      throw new HttpException(400, "Row and column counts do not match")
     super(props)
   }
 
@@ -280,6 +281,74 @@ class SquareMatrix extends BaseMatrix {
     }
 
     return determinant
+  }
+
+  /**
+   * Checks if the matrix is the identity matrix.
+   * @returns boolean
+   */
+  isIdentity() {
+    for (let i = 0; i < this.rows; i++)
+      for (let j = 0; j < this.columns; j++) {
+        if (i == j && this.entries[i][j] !== 1) return false
+        else if (i != j && this.entries[i][j] !== 0) return false
+      }
+    return true
+  }
+
+  /**
+   * Calculates the inverse matrix of the current matrix.
+   *
+   * It performs RREF on the current matrix, obtaining the actions array.
+   * The actions array describes the row operations done to perform RREF.
+   * The same actions are played onto an identity matrix, giving us the inverse matrix.
+   */
+  inverse() {
+    // if matrix is singular, throw error that the matrix is singular
+    if (this.calcDeterminant() === 0)
+      throw new HttpException(400, "Matrix is singular; No inverse exists")
+
+    const rrefActions = this.toRREF()
+
+    // create identity matrix
+    const identity = new SquareMatrix({
+      rows: this.rows,
+      columns: this.columns,
+    })
+    range(this.rows).forEach((i) => {
+      identity.entries[i][i] = 1
+    })
+
+    // play the actions onto the identity matrix, while storing the intermediate states
+    let actions: {
+      inverse: number[][]
+      action: RowOperation
+      params: number[]
+      matrix: number[][]
+    }[] = []
+
+    rrefActions.forEach((step) => {
+      // what action to perform onto the identity matrix
+      const actionToPerform = step.action
+      const params = step.params
+      if (actionToPerform === RowOperation.ADD_MULTIPLE) {
+        identity.addMultiple(params[0], params[1], params[2])
+      } else if (actionToPerform === RowOperation.MULTIPLY_ROW) {
+        identity.multiplyRow(params[0], params[1])
+      } else if (actionToPerform === RowOperation.SWAP) {
+        identity.swapRows(params[0], params[1])
+      }
+
+      // copied action object, adding inverse
+      const newAction = {
+        ...step,
+        inverse: _.cloneDeep(identity.entries),
+      }
+      actions.push(newAction)
+    })
+
+    this.entries = identity.entries
+    return actions
   }
 }
 

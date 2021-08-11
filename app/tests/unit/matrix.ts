@@ -2,9 +2,10 @@
 import chai from "chai"
 
 import { EchelonType } from "../../types/Matrix"
+import { range } from "../../utils/misc"
 
 // import stuff to be tested
-import { Matrix } from "../../classes/Matrix"
+import { Matrix, SquareMatrix } from "../../classes/Matrix"
 
 export default () => {
   describe("echelonStatus", () => {
@@ -237,6 +238,86 @@ export default () => {
         const actions = matrix.toRREF()
         const res = matrix.echelonStatus()
         chai.expect(res).to.equal(EchelonType.RREF)
+      })
+    })
+  })
+
+  describe("isIdentity", () => {
+    it("should return true for identity matrices", () => {
+      range(5).forEach((val) => {
+        const length = val + 1
+        // create identity matrix of size length
+        const matrix = new SquareMatrix({ rows: length, columns: length })
+        range(length).forEach((i) => {
+          matrix.entries[i][i] = 1
+        })
+        // check
+        const res = matrix.isIdentity()
+        chai.expect(res).to.equal(true)
+      })
+    })
+    it("should return false for non-identity matrices", () => {
+      const matrices = [
+        [
+          [1, 2, 3],
+          [2, 3, 4],
+          [3, 4, 5],
+        ],
+        [
+          [1, 0, 0],
+          [0, 3, 0],
+          [0, 0, 2],
+        ],
+      ]
+      matrices.forEach((arr) => {
+        const matrix = new SquareMatrix({
+          rows: arr.length,
+          columns: arr.length,
+          entries: arr,
+        })
+        // check
+        const res = matrix.isIdentity()
+        chai.expect(res).to.equal(false)
+      })
+    })
+  })
+
+  describe("inverse", () => {
+    it("should return inverse correctly, for non-singular square matrices", () => {
+      const matrices = [
+        [
+          [1, 0, 0],
+          [0, 4, 0],
+          [0, 0, 2],
+        ],
+        [
+          [1, 2, 4],
+          [2, 3, 5],
+          [3, 4, 5],
+        ],
+      ]
+      const inverses = [
+        [
+          [1, 0, 0],
+          [0, 1 / 4, 0],
+          [0, 0, 1 / 2],
+        ],
+        [
+          [-5, 6, -2],
+          [5, -7, 3],
+          [-1, 2, -1],
+        ],
+      ]
+      matrices.forEach((arr, idx) => {
+        const matrix = new SquareMatrix({
+          rows: arr.length,
+          columns: arr[0].length,
+          entries: arr,
+        })
+        const actions = matrix.inverse()
+        // compare with the answer
+        const inverse = inverses[idx]
+        chai.expect(matrix.entries).to.eql(inverse)
       })
     })
   })

@@ -26,6 +26,10 @@ const toTest = [
     route: "/matrix/determinant",
     method: Matrix.calcDeterminant,
   },
+  {
+    route: "/matrix/inverse",
+    method: Matrix.calcInverse,
+  },
 ]
 
 chai.use(chaiHttp)
@@ -89,7 +93,7 @@ describe("API tests", () => {
           chai.expect(res.body).to.equal(0)
         })
     })
-    it("should obtain 500 for 3 by 2 matrix", async () => {
+    it("should obtain 400 for 3 by 2 matrix", async () => {
       await chai
         .request(url)
         .get(route)
@@ -97,10 +101,55 @@ describe("API tests", () => {
           matrix: "[[1,2],[3,4],[5,6]]",
         })
         .then((res) => {
-          chai.expect(res.status).to.equal(500)
+          chai.expect(res.status).to.equal(400)
           chai
             .expect(res.body.message)
             .to.equal("Row and column counts do not match")
+        })
+    })
+  })
+
+  describe("/api/matrix/inverse", () => {
+    before(start)
+    after(stop)
+
+    it("should return inverse of 3 by 3 matrix", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1,0,0],[0,4,0],[0,0,2]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(200)
+        })
+    })
+    it("should obtain 400 for 3 by 2 matrix", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1,2],[3,4],[5,6]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai
+            .expect(res.body.message)
+            .to.equal("Row and column counts do not match")
+        })
+    })
+    it("should obtain 400 for singular square matrix", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1,2],[0,0]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai
+            .expect(res.body.message)
+            .to.equal("Matrix is singular; No inverse exists")
         })
     })
   })

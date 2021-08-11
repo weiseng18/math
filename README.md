@@ -26,6 +26,16 @@ API: `/api/matrix/rref?matrix=[[1,2],[3,4]]`
 
 Description: Reduces a matrix to RREF. The algorithm used first reduces the matrix to a REF form, then to RREF form.
 
+### Inverse of a square matrix
+
+Frontend page: `/matrix`
+
+Frontend usage: `inv [[1,2],[3,4]]` or `inverse [[1,2],[3,4]]`
+
+API: `/api/matrix/inverse?matrix=[[1,2],[3,4]]`
+
+Description: Obtains the inverse of a matrix. The algorithm used reduces the original matrix to RREF while playing the same row operations onto an identity matrix of the same dimensions.
+
 ## Caveats
 
 - Does not support fraction input
