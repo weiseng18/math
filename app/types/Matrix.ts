@@ -4,4 +4,11 @@ enum EchelonType {
   RREF = "Reduced row echelon form",
 }
 
-export { EchelonType }
+enum RowOperation {
+  NONE = "none",
+  ADD_MULTIPLE = "addMultiple",
+  MULTIPLY_ROW = "multiplyRow",
+  SWAP = "swap",
+}
+
+export { EchelonType, RowOperation }

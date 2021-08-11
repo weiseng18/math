@@ -7,5 +7,6 @@ app.get("/api/test", Test.test)
 
 app.get("/api/matrix/determinant", Matrix.calcDeterminant)
 app.get("/api/matrix/rref", Matrix.reduceRREF)
+app.get("/api/matrix/inverse", Matrix.calcInverse)
 
 module.exports = app
