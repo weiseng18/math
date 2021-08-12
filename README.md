@@ -2,6 +2,16 @@
 
 Web app that helps to perform some math computation, and tries to provide the intermediate steps taken.
 
+## Where is this hosted?
+
+This project has simple CI/CD, and semantic versioning. I manage my deployments with the `master` and `develop` branches.
+
+`master` branch is hosted [here](https://math-weiseng18.vercel.app). It is also the link on the right side of panel of the Github page of this repo. This contains the production build, so it is the **latest stable release**. For every update to this branch, the semantic version changes.
+
+`develop` branch is hosted [here](https://math-weiseng18-staging.vercel.app). This contains the staging build, so it contains the **very latest code**, being usually ahead of `master`. For every update to this branch, the semantic version might not change.
+
+Vercel provides a preview deployment for every push to a branch. As a result the code can get tested online in each PR, prior to merging into `develop`. This usually means that `develop` is as stable as `master`. Thus, more often than not, you can just use the `develop` version.
+
 ## Functions
 
 This app currently supports the following functions:
@@ -41,3 +51,22 @@ Description: Obtains the inverse of a matrix. The algorithm used reduces the ori
 - Does not support fraction input
 - Supports RREF calculations where you have non-terminating decimals, such as the decimal representation of `1/3`. The output might contain somewhat long decimal representations but the idea is there.
 - Comes with usual floating point errors
+
+## Purpose
+
+This project is primarily for exploring and learning web development, and CI/CD. This project features the following:
+
+### Web development
+
+- Javascript frontend + Typescript backend
+- Using [Vercel's serverless functions](https://vercel.com/docs/serverless-functions/introduction) to host the backend
+
+### Testing
+
+- API and unit testing with [Mocha](https://mochajs.org/)
+- Mocking a server to perform API tests on Vercel serverless functions, with [vercel-node-server](https://github.com/ctrlplusb/vercel-node-server)
+
+### Automated tasks
+
+- Automated testing with Github Workflow
+- Automated changelog with [auto-changelog](https://github.com/cookpete/auto-changelog)
