@@ -51,3 +51,22 @@ Description: Obtains the inverse of a matrix. The algorithm used reduces the ori
 - Does not support fraction input
 - Supports RREF calculations where you have non-terminating decimals, such as the decimal representation of `1/3`. The output might contain somewhat long decimal representations but the idea is there.
 - Comes with usual floating point errors
+
+## Purpose
+
+This project is primarily for exploring and learning web development, and CI/CD. This project features the following:
+
+### Web development
+
+- Javascript frontend + Typescript backend
+- Using [Vercel's serverless functions](https://vercel.com/docs/serverless-functions/introduction) to host the backend
+
+### Testing
+
+- API and unit testing with [Mocha](https://mochajs.org/)
+- Mocking a server to perform API tests on Vercel serverless functions, with [vercel-node-server](https://github.com/ctrlplusb/vercel-node-server)
+
+### Automated tasks
+
+- Automated testing with Github Workflow
+- Automated changelog with [auto-changelog](https://github.com/cookpete/auto-changelog)
