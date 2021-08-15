@@ -198,32 +198,38 @@ export default () => {
         const logicStrings = ["!p", "p & q", "!(p | q)", "(p => q) => r"]
 
         const answers = [
-          [
-            [false, true],
-            [true, false],
-          ],
-          [
-            [false, false, false],
-            [false, true, false],
-            [true, false, false],
-            [true, true, true],
-          ],
-          [
-            [false, false, true],
-            [false, true, false],
-            [true, false, false],
-            [true, true, false],
-          ],
-          [
-            [false, false, false, false],
-            [false, false, true, true],
-            [false, true, false, false],
-            [false, true, true, true],
-            [true, false, false, true],
-            [true, false, true, true],
-            [true, true, false, false],
-            [true, true, true, true],
-          ],
+          { booleans: [[false], [true]], answers: [true, false] },
+          {
+            booleans: [
+              [false, false],
+              [false, true],
+              [true, false],
+              [true, true],
+            ],
+            answers: [false, false, false, true],
+          },
+          {
+            booleans: [
+              [false, false],
+              [false, true],
+              [true, false],
+              [true, true],
+            ],
+            answers: [true, false, false, false],
+          },
+          {
+            booleans: [
+              [false, false, false],
+              [false, false, true],
+              [false, true, false],
+              [false, true, true],
+              [true, false, false],
+              [true, false, true],
+              [true, true, false],
+              [true, true, true],
+            ],
+            answers: [false, true, false, true, true, true, false, true],
+          },
         ]
 
         logicStrings.forEach((logicExpr, idx) => {

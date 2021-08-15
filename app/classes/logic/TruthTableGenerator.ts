@@ -24,9 +24,15 @@ class TruthTableGenerator {
   generate() {
     const bin = Math.pow(2, this.variables.length)
 
-    // 2d array
-    // row array is of length variables + 1
-    let output = []
+    // 2d array containing the enumerated booleans
+    // [F, F, ..., F, F]
+    // [F, F, ..., F, T]
+    // ...
+    // [T, T, ..., T, T]
+    let enumeratedBooleanRows = []
+
+    // 1d array containing the result, evaluated by substituting the booleans
+    let ansArray = []
 
     let tree = new SyntaxTree({
       tokens: this.tokens,
@@ -35,7 +41,7 @@ class TruthTableGenerator {
     const node = tree.build()
 
     for (let i = 0; i < bin; i++) {
-      let rowArray = []
+      let rowArray: boolean[] = []
 
       let mask = i.toString(2) // generate bitmask
       while (mask.length < this.variables.length) mask = "0" + mask // pad with zeroes
@@ -48,11 +54,14 @@ class TruthTableGenerator {
 
       // result
       const res = tree.eval(node, bitmaskObject)
-      rowArray.push(res)
+      ansArray.push(res)
 
-      output.push(rowArray)
+      enumeratedBooleanRows.push(rowArray)
     }
-    return output
+    return {
+      booleans: enumeratedBooleanRows,
+      answers: ansArray,
+    }
   }
 }
 
