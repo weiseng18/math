@@ -7,4 +7,12 @@ enum LogicToken {
   IMPLIES = "=>",
 }
 
-export { LogicToken }
+interface IExpressionInfo {
+  tokens: {
+    type: string
+    value: string
+  }[]
+  variables: { [varName: string]: number[] }
+}
+
+export { LogicToken, IExpressionInfo }

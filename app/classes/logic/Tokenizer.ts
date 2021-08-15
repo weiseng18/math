@@ -1,4 +1,4 @@
-import { LogicToken } from "../../types/Logic"
+import { LogicToken, IExpressionInfo } from "../../types/Logic"
 
 import * as _ from "lodash"
 
@@ -33,7 +33,7 @@ class Tokenizer {
     this.alphaChars = alphaChars
   }
 
-  tokenize(inp: string) {
+  tokenize(inp: string): IExpressionInfo {
     // stores the output
     let tokens = []
     let variables: { [varName: string]: number[] } = {}
