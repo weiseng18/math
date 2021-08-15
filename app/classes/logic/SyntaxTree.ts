@@ -34,6 +34,10 @@ class SyntaxTree {
     return new Node("", null, null)
   }
 
+  /**
+   * Builds a syntax tree of a mathematical logic expression
+   * @returns Node representing the root of the tree
+   */
   build(): Node {
     let cur = null
 
@@ -85,6 +89,11 @@ class SyntaxTree {
     return cur
   }
 
+  /**
+   * Generates an object that contains the entire tree structure of a syntax tree.
+   * @param root Node representing the root of the tree
+   * @returns object containing the entire tree structure
+   */
   toObj(root: Node) {
     const curOutput = root.value
 
