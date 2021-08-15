@@ -2,12 +2,12 @@
 import chai from "chai"
 
 // import stuff to be tested
-import Parser from "../../classes/logic/Parser"
+import Tokenizer from "../../classes/logic/Tokenizer"
 
 export default () => {
-  describe("Parser", () => {
-    describe("Parser.tokenize", () => {
-      const parser = new Parser()
+  describe("Tokenizer", () => {
+    describe("Tokenizer.tokenize", () => {
+      const tokenizer = new Tokenizer()
 
       it("should parse strings without invalid chars properly", () => {
         const logicStrings = ["!p", "p & q", "p | q => q", "!(p | q)"]
@@ -18,7 +18,7 @@ export default () => {
           ["!", "(", "p", "|", "q", ")"],
         ]
         logicStrings.forEach((str, idx) => {
-          const res = parser.tokenize(str)
+          const res = tokenizer.tokenize(str)
           const vals = res.map((info) => info.value)
           chai.expect(logicParsed[idx]).to.eql(vals)
         })
@@ -40,7 +40,7 @@ export default () => {
           ["p", "q"],
         ]
         logicStrings.forEach((str, idx) => {
-          const res = parser.tokenize(str)
+          const res = tokenizer.tokenize(str)
           const vals = res.map((info) => info.value)
           chai.expect(logicParsed[idx]).to.eql(vals)
         })

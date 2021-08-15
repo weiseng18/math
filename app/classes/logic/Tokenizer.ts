@@ -2,7 +2,7 @@ import { LogicToken } from "../../types/Logic"
 
 import * as _ from "lodash"
 
-class Parser {
+class Tokenizer {
   private keys: string[] // enum name (e.g. BINARY_AND)
   private values: string[] // enum value (e.g. &)
 
@@ -99,4 +99,4 @@ class Parser {
   }
 }
 
-export default Parser
+export default Tokenizer
