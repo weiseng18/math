@@ -36,6 +36,7 @@ class Tokenizer {
   tokenize(inp: string) {
     // stores the output
     let tokens = []
+    let variables: { [varName: string]: number[] } = {}
 
     // loop through input
     let chunk = ""
@@ -47,10 +48,17 @@ class Tokenizer {
 
       if (this.isAlphaChar(chunk)) {
         // can assume alphabet = variable for now
+
+        // keep track of occurrences of this variable in tokens array
+        const idx = tokens.length
+        if (variables[chunk]) variables[chunk].push(idx)
+        else variables[chunk] = [idx]
+
         tokens.push({
           type: "VAR",
           value: chunk,
         })
+
         chunk = ""
       } else if (this.isOperatorString(chunk)) {
         // check if is a LogicToken
@@ -62,7 +70,10 @@ class Tokenizer {
       }
     }
 
-    return tokens
+    return {
+      tokens,
+      variables,
+    }
   }
 
   /**
