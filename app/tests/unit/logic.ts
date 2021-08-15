@@ -17,10 +17,33 @@ export default () => {
           ["p", "|", "q", "=>", "q"],
           ["!", "(", "p", "|", "q", ")"],
         ]
+        const variables = [
+          {
+            p: [1],
+          },
+          {
+            p: [0],
+            q: [2],
+          },
+          {
+            p: [0],
+            q: [2, 4],
+          },
+          {
+            p: [2],
+            q: [4],
+          },
+        ]
         logicStrings.forEach((str, idx) => {
           const res = tokenizer.tokenize(str)
-          const vals = res.map((info) => info.value)
+
+          // check that each token was parsed and received properly
+          const vals = res.tokens.map((info) => info.value)
           chai.expect(logicParsed[idx]).to.eql(vals)
+
+          // check that all vars present in the order
+          const variablesInfo = res.variables
+          chai.expect(variables[idx]).to.eql(variablesInfo)
         })
       })
 
@@ -39,10 +62,37 @@ export default () => {
           ["!", "(", "p", "|", "q", ")"],
           ["p", "q"],
         ]
+        const variables = [
+          {
+            p: [1],
+          },
+          {
+            p: [0],
+            q: [2],
+          },
+          {
+            p: [0],
+            q: [2, 4],
+          },
+          {
+            p: [2],
+            q: [4],
+          },
+          {
+            p: [0],
+            q: [1],
+          },
+        ]
         logicStrings.forEach((str, idx) => {
           const res = tokenizer.tokenize(str)
-          const vals = res.map((info) => info.value)
+
+          // check that each token was parsed and received properly
+          const vals = res.tokens.map((info) => info.value)
           chai.expect(logicParsed[idx]).to.eql(vals)
+
+          // check that all vars present in the order
+          const variablesInfo = res.variables
+          chai.expect(variables[idx]).to.eql(variablesInfo)
         })
       })
     })
