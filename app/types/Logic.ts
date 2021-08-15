@@ -15,4 +15,8 @@ interface IExpressionInfo {
   variables: { [varName: string]: number[] }
 }
 
-export { LogicToken, IExpressionInfo }
+interface BitmaskObject {
+  [key: string]: boolean
+}
+
+export { LogicToken, IExpressionInfo, BitmaskObject }
