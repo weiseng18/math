@@ -4,6 +4,7 @@ import chai from "chai"
 // import stuff to be tested
 import Tokenizer from "../../classes/logic/Tokenizer"
 import { SyntaxTree } from "../../classes/logic/SyntaxTree"
+import TruthTableGenerator from "../../classes/logic/TruthTableGenerator"
 
 export default () => {
   describe("Tokenizer", () => {
@@ -185,6 +186,52 @@ export default () => {
             const evaluated = tree.eval(node, obj.mask)
             chai.expect(evaluated).to.equal(obj.answer)
           })
+        })
+      })
+    })
+  })
+
+  describe("Truth table generator", () => {
+    describe("TruthTableGenerator.generate", () => {
+      const tokenizer = new Tokenizer()
+      it("should correctly evaluate truth table, given a tokenized expression and variable info", () => {
+        const logicStrings = ["!p", "p & q", "!(p | q)", "(p => q) => r"]
+
+        const answers = [
+          [
+            [false, true],
+            [true, false],
+          ],
+          [
+            [false, false, false],
+            [false, true, false],
+            [true, false, false],
+            [true, true, true],
+          ],
+          [
+            [false, false, true],
+            [false, true, false],
+            [true, false, false],
+            [true, true, false],
+          ],
+          [
+            [false, false, false, false],
+            [false, false, true, true],
+            [false, true, false, false],
+            [false, true, true, true],
+            [true, false, false, true],
+            [true, false, true, true],
+            [true, true, false, false],
+            [true, true, true, true],
+          ],
+        ]
+
+        logicStrings.forEach((logicExpr, idx) => {
+          const res = tokenizer.tokenize(logicExpr)
+          const generator = new TruthTableGenerator(res)
+          const resGen = generator.generate()
+
+          chai.expect(resGen).to.eql(answers[idx])
         })
       })
     })
