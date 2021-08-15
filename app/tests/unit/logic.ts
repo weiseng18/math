@@ -152,5 +152,41 @@ export default () => {
         })
       })
     })
+    describe("SyntaxTree.eval", () => {
+      it("should evaluate logic expressions correctly", () => {
+        const logicStrings = ["p & q", "(p => q) => r"]
+
+        // one array per logicString
+        // each array will contain objects
+        const checkers = [
+          [
+            { mask: { p: false, q: false }, answer: false },
+            { mask: { p: false, q: true }, answer: false },
+            { mask: { p: true, q: false }, answer: false },
+            { mask: { p: true, q: true }, answer: true },
+          ],
+          [
+            { mask: { p: false, q: false, r: false }, answer: false },
+            { mask: { p: false, q: false, r: true }, answer: true },
+            { mask: { p: false, q: true, r: false }, answer: false },
+            { mask: { p: false, q: true, r: true }, answer: true },
+            { mask: { p: true, q: false, r: false }, answer: true },
+            { mask: { p: true, q: false, r: true }, answer: true },
+            { mask: { p: true, q: true, r: false }, answer: false },
+            { mask: { p: true, q: true, r: true }, answer: true },
+          ],
+        ]
+
+        logicStrings.forEach((str, idx) => {
+          const res = tokenizer.tokenize(str)
+          const tree = new SyntaxTree(res)
+          const node = tree.build()
+          checkers[idx].forEach((obj) => {
+            const evaluated = tree.eval(node, obj.mask)
+            chai.expect(evaluated).to.equal(obj.answer)
+          })
+        })
+      })
+    })
   })
 }
