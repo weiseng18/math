@@ -52,7 +52,13 @@ class SyntaxTree {
         unclosedBrackets++
       } else if (token.value === LogicToken.RIGHT_BRACKET) {
         unclosedBrackets--
-        // do something
+        if (stack.length > 0 && unclosedBrackets === 0) {
+          // complete remaining operations since the bracket is closed
+          while (stack.length > 0) {
+            const newTop = stack.pop()
+            cur = this.handleOperatorWithNode(newTop, cur)
+          }
+        }
       } else if (token.type === "VAR") {
         if (stack.length > 0 && unclosedBrackets === 0) {
           const top = stack.pop()
