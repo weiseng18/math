@@ -2,10 +2,12 @@ import { IExpressionInfo, LogicToken } from "../../types/Logic"
 
 class Node {
   value: string
+  type: string
   left: Node
   right: Node
-  constructor(value: string, left: Node, right: Node) {
+  constructor(value: string, type: string, left: Node, right: Node) {
     this.value = value
+    this.type = type
     this.left = left
     this.right = right
   }
@@ -31,7 +33,7 @@ class SyntaxTree {
   }
 
   newNullNode() {
-    return new Node("", null, null)
+    return new Node("", "", null, null)
   }
 
   /**
@@ -60,7 +62,7 @@ class SyntaxTree {
             cur = this.handleOperatorWithNode(newTop, cur)
           }
         } else {
-          cur = new Node(token.value, null, null)
+          cur = new Node(token.value, token.type, null, null)
         }
       } else {
         if (token.value === LogicToken.NEGATION) {
@@ -95,15 +97,14 @@ class SyntaxTree {
    * @returns object containing the entire tree structure
    */
   toObj(root: Node) {
-    const curOutput = root.value
-
     let leftOutput = {},
       rightOutput = {}
     if (root.left !== null) leftOutput = this.toObj(root.left)
     if (root.right !== null) rightOutput = this.toObj(root.right)
 
     return {
-      cur: curOutput,
+      value: root.value,
+      type: root.type,
       left: leftOutput,
       right: rightOutput,
     }
@@ -121,17 +122,27 @@ class SyntaxTree {
    */
   handleOperatorWithVariable(top: IStackItem, token: IToken): Node {
     // create new node with this variable
-    const varNode = new Node(token.value, null, null)
+    const varNode = new Node(token.value, token.type, null, null)
 
     if (top.operator.value === LogicToken.NEGATION) {
       // negation only has 1 parameter, so handle separately
-      const opNode = new Node(top.operator.value, null, varNode)
+      const opNode = new Node(
+        top.operator.value,
+        top.operator.type,
+        null,
+        varNode
+      )
       return opNode
     } else {
       //    operator (root)
       //     /      \
       // top.node   varNode
-      const opNode = new Node(top.operator.value, top.node, varNode)
+      const opNode = new Node(
+        top.operator.value,
+        top.operator.type,
+        top.node,
+        varNode
+      )
       return opNode
     }
   }
@@ -147,13 +158,18 @@ class SyntaxTree {
   handleOperatorWithNode(top: IStackItem, node: Node): Node {
     if (top.operator.value === LogicToken.NEGATION) {
       // negation only has 1 parameter, so handle separately
-      const opNode = new Node(top.operator.value, null, node)
+      const opNode = new Node(top.operator.value, top.operator.type, null, node)
       return opNode
     } else {
       //    operator (root)
       //     /      \
       // top.node   node
-      const opNode = new Node(top.operator.value, top.node, node)
+      const opNode = new Node(
+        top.operator.value,
+        top.operator.type,
+        top.node,
+        node
+      )
       return opNode
     }
   }

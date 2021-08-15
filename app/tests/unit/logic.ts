@@ -106,63 +106,37 @@ export default () => {
 
         const treeObjects = [
           {
-            cur: "!",
+            value: "!",
+            type: "OP",
+            left: {},
+            right: { value: "p", type: "VAR", left: {}, right: {} },
+          },
+          {
+            value: "&",
+            type: "OP",
+            left: { value: "p", type: "VAR", left: {}, right: {} },
+            right: { value: "q", type: "VAR", left: {}, right: {} },
+          },
+          {
+            value: "=>",
+            type: "OP",
+            left: {
+              value: "|",
+              type: "OP",
+              left: { value: "p", type: "VAR", left: {}, right: {} },
+              right: { value: "q", type: "VAR", left: {}, right: {} },
+            },
+            right: { value: "q", type: "VAR", left: {}, right: {} },
+          },
+          {
+            value: "!",
+            type: "OP",
             left: {},
             right: {
-              cur: "p",
-              left: {},
-              right: {},
-            },
-          },
-          {
-            cur: "&",
-            left: {
-              cur: "p",
-              left: {},
-              right: {},
-            },
-            right: {
-              cur: "q",
-              left: {},
-              right: {},
-            },
-          },
-          {
-            cur: "=>",
-            left: {
-              cur: "|",
-              left: {
-                cur: "p",
-                left: {},
-                right: {},
-              },
-              right: {
-                cur: "q",
-                left: {},
-                right: {},
-              },
-            },
-            right: {
-              cur: "q",
-              left: {},
-              right: {},
-            },
-          },
-          {
-            cur: "!",
-            left: {},
-            right: {
-              cur: "|",
-              left: {
-                cur: "p",
-                left: {},
-                right: {},
-              },
-              right: {
-                cur: "q",
-                left: {},
-                right: {},
-              },
+              value: "|",
+              type: "OP",
+              left: { value: "p", type: "VAR", left: {}, right: {} },
+              right: { value: "q", type: "VAR", left: {}, right: {} },
             },
           },
         ]
