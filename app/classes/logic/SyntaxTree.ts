@@ -1,4 +1,4 @@
-import { IExpressionInfo, LogicToken } from "../../types/Logic"
+import { IExpressionInfo, LogicToken, BitmaskObject } from "../../types/Logic"
 
 class Node {
   value: string
@@ -113,6 +113,30 @@ class SyntaxTree {
       type: root.type,
       left: leftOutput,
       right: rightOutput,
+    }
+  }
+
+  /**
+   * Evaluates a mathematical logic expression, given the values of unknowns to substitute into
+   * @param root Node representing the root of the tree
+   * @param mask object, maps varName to boolean
+   * @returns evaluated mathematical logic expression, true or false
+   */
+  eval(root: Node, mask: BitmaskObject): boolean {
+    if (root.type === "OP") {
+      if (root.value === LogicToken.NEGATION)
+        return !this.eval(root.right, mask)
+      else if (root.value === LogicToken.BINARY_AND)
+        return this.eval(root.left, mask) && this.eval(root.right, mask)
+      else if (root.value === LogicToken.BINARY_OR)
+        return this.eval(root.left, mask) || this.eval(root.right, mask)
+      else if (root.value === LogicToken.IMPLIES)
+        // !p || q (implication law)
+        return !this.eval(root.left, mask) || this.eval(root.right, mask)
+    } else {
+      // unknowns, to be substituted
+      const varName = root.value
+      return mask[varName]
     }
   }
 
