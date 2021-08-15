@@ -3,6 +3,7 @@ import chai from "chai"
 
 // import stuff to be tested
 import Tokenizer from "../../classes/logic/Tokenizer"
+import SyntaxTree from "../../classes/logic/SyntaxTree"
 
 export default () => {
   describe("Tokenizer", () => {
@@ -93,6 +94,87 @@ export default () => {
           // check that all vars present in the order
           const variablesInfo = res.variables
           chai.expect(variables[idx]).to.eql(variablesInfo)
+        })
+      })
+    })
+  })
+  describe("Syntax tree", () => {
+    const tokenizer = new Tokenizer()
+    describe("SyntaxTree.toObj", () => {
+      it("should generate an accurate syntax tree", () => {
+        const logicStrings = ["!p", "p & q", "p | q => q", "!(p | q)"]
+
+        const treeObjects = [
+          {
+            cur: "!",
+            left: {},
+            right: {
+              cur: "p",
+              left: {},
+              right: {},
+            },
+          },
+          {
+            cur: "&",
+            left: {
+              cur: "p",
+              left: {},
+              right: {},
+            },
+            right: {
+              cur: "q",
+              left: {},
+              right: {},
+            },
+          },
+          {
+            cur: "=>",
+            left: {
+              cur: "|",
+              left: {
+                cur: "p",
+                left: {},
+                right: {},
+              },
+              right: {
+                cur: "q",
+                left: {},
+                right: {},
+              },
+            },
+            right: {
+              cur: "q",
+              left: {},
+              right: {},
+            },
+          },
+          {
+            cur: "!",
+            left: {},
+            right: {
+              cur: "|",
+              left: {
+                cur: "p",
+                left: {},
+                right: {},
+              },
+              right: {
+                cur: "q",
+                left: {},
+                right: {},
+              },
+            },
+          },
+        ]
+
+        logicStrings.forEach((str, idx) => {
+          const res = tokenizer.tokenize(str)
+          const tree = new SyntaxTree(res)
+          const node = tree.build()
+          const stringified = tree.toObj(node)
+
+          const correct = treeObjects[idx]
+          chai.expect(stringified).to.eql(correct)
         })
       })
     })
