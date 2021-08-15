@@ -205,4 +205,4 @@ class SyntaxTree {
   }
 }
 
-export default SyntaxTree
+export { Node, SyntaxTree }

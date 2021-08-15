@@ -3,7 +3,7 @@ import chai from "chai"
 
 // import stuff to be tested
 import Tokenizer from "../../classes/logic/Tokenizer"
-import SyntaxTree from "../../classes/logic/SyntaxTree"
+import { SyntaxTree } from "../../classes/logic/SyntaxTree"
 
 export default () => {
   describe("Tokenizer", () => {
