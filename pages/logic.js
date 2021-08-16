@@ -95,6 +95,8 @@ const Page = () => {
         setQuery("")
         setBooleans([])
         setAnswers([])
+        setVariables([])
+        setExpression([])
       }
     } else {
       MathJax.typeset()
