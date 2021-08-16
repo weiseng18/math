@@ -1,4 +1,4 @@
-import { LogicToken, IExpressionInfo } from "../../types/Logic"
+import { LogicToken, LogicTokenType, IExpressionInfo } from "../../types/Logic"
 
 import * as _ from "lodash"
 
@@ -52,7 +52,7 @@ class Tokenizer {
         else variables[chunk] = [idx]
 
         tokens.push({
-          type: "VAR",
+          type: LogicTokenType.VARIABLE,
           value: chunk,
         })
 
@@ -60,7 +60,7 @@ class Tokenizer {
       } else if (this.isOperatorString(chunk)) {
         // check if is a LogicToken
         tokens.push({
-          type: "OP",
+          type: LogicTokenType.OPERATOR,
           value: chunk,
         })
         chunk = ""

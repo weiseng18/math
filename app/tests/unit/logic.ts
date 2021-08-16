@@ -1,6 +1,8 @@
 // standard testing modules
 import chai from "chai"
 
+import { LogicTokenType } from "../../types/Logic"
+
 // import stuff to be tested
 import Tokenizer from "../../classes/logic/Tokenizer"
 import { SyntaxTree } from "../../classes/logic/SyntaxTree"
@@ -108,36 +110,76 @@ export default () => {
         const treeObjects = [
           {
             value: "!",
-            type: "OP",
+            type: LogicTokenType.OPERATOR,
             left: {},
-            right: { value: "p", type: "VAR", left: {}, right: {} },
+            right: {
+              value: "p",
+              type: LogicTokenType.VARIABLE,
+              left: {},
+              right: {},
+            },
           },
           {
             value: "&",
-            type: "OP",
-            left: { value: "p", type: "VAR", left: {}, right: {} },
-            right: { value: "q", type: "VAR", left: {}, right: {} },
+            type: LogicTokenType.OPERATOR,
+            left: {
+              value: "p",
+              type: LogicTokenType.VARIABLE,
+              left: {},
+              right: {},
+            },
+            right: {
+              value: "q",
+              type: LogicTokenType.VARIABLE,
+              left: {},
+              right: {},
+            },
           },
           {
             value: "=>",
-            type: "OP",
+            type: LogicTokenType.OPERATOR,
             left: {
               value: "|",
-              type: "OP",
-              left: { value: "p", type: "VAR", left: {}, right: {} },
-              right: { value: "q", type: "VAR", left: {}, right: {} },
+              type: LogicTokenType.OPERATOR,
+              left: {
+                value: "p",
+                type: LogicTokenType.VARIABLE,
+                left: {},
+                right: {},
+              },
+              right: {
+                value: "q",
+                type: LogicTokenType.VARIABLE,
+                left: {},
+                right: {},
+              },
             },
-            right: { value: "q", type: "VAR", left: {}, right: {} },
+            right: {
+              value: "q",
+              type: LogicTokenType.VARIABLE,
+              left: {},
+              right: {},
+            },
           },
           {
             value: "!",
-            type: "OP",
+            type: LogicTokenType.OPERATOR,
             left: {},
             right: {
               value: "|",
-              type: "OP",
-              left: { value: "p", type: "VAR", left: {}, right: {} },
-              right: { value: "q", type: "VAR", left: {}, right: {} },
+              type: LogicTokenType.OPERATOR,
+              left: {
+                value: "p",
+                type: LogicTokenType.VARIABLE,
+                left: {},
+                right: {},
+              },
+              right: {
+                value: "q",
+                type: LogicTokenType.VARIABLE,
+                left: {},
+                right: {},
+              },
             },
           },
         ]

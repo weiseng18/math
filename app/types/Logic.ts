@@ -7,6 +7,11 @@ export enum LogicToken {
   IMPLIES = "=>",
 }
 
+export enum LogicTokenType {
+  VARIABLE = "VAR",
+  OPERATOR = "OP",
+}
+
 export interface IExpressionInfo {
   tokens: {
     type: string

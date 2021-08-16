@@ -1,4 +1,9 @@
-import { IExpressionInfo, LogicToken, BitmaskObject } from "../../types/Logic"
+import {
+  IExpressionInfo,
+  LogicToken,
+  LogicTokenType,
+  BitmaskObject,
+} from "../../types/Logic"
 
 class Node {
   value: string
@@ -57,7 +62,8 @@ class SyntaxTree {
             cur = this.handleOperatorWithNode(newTop, cur)
           }
         }
-      } else if (token.type === "VAR") {
+      } else if (token.type === LogicTokenType.VARIABLE) {
+        // The token is a variable
         if (stack.length > 0 && unclosedBrackets === 0) {
           const top = stack.pop()
           cur = this.handleOperatorWithVariable(top, token)
@@ -121,7 +127,7 @@ class SyntaxTree {
    * @returns evaluated mathematical logic expression, true or false
    */
   eval(root: Node, mask: BitmaskObject): boolean {
-    if (root.type === "OP") {
+    if (root.type === LogicTokenType.OPERATOR) {
       if (root.value === LogicToken.NEGATION)
         return !this.eval(root.right, mask)
       else if (root.value === LogicToken.BINARY_AND)
