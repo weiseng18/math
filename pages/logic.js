@@ -18,7 +18,10 @@ import { useEffect, useState } from "react"
 import Router, { useRouter } from "next/router"
 import axios from "axios"
 
-import { logicTextBf, convertTokenizedLogicExpressionToLatex } from "../utils"
+import {
+  logicTextBf,
+  convertTokenizedLogicExpressionToLatex,
+} from "frontend/utils"
 
 const Page = () => {
   const [query, setQuery] = useState("") // text in the input
