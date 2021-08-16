@@ -25,6 +25,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "preserve",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   }
 }
