@@ -18,7 +18,16 @@ const generateTruthTable = (req: VercelRequest, res: VercelResponse) => {
     // - Call TruthTableGenerator.generate() to create the truth table
     const generator = new TruthTableGenerator(tokens)
     const result = generator.generate()
-    res.json(result)
+
+    // Post-processing
+    const variables = Object.keys(tokens.variables)
+    const tokenizedExpression = tokens.tokens.map((one) => one.value)
+
+    res.json({
+      ...result,
+      variables,
+      expression: tokenizedExpression,
+    })
   } catch (err) {
     const errorCode = _.get(err, "code", 500)
     res.status(errorCode).json({ message: err.message })
