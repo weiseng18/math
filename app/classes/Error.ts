@@ -6,4 +6,11 @@ class HttpException {
     this.message = message
   }
 }
-export { HttpException }
+
+class BadRequest extends HttpException {
+  constructor(message: string) {
+    super(400, message)
+  }
+}
+
+export { HttpException, BadRequest }

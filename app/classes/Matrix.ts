@@ -2,7 +2,7 @@ import { range } from "../utils/misc"
 
 import { EchelonType, RowOperation } from "../types/Matrix"
 import { leadingEntryIndex } from "../utils/Matrix"
-import { HttpException } from "./Error"
+import { BadRequest } from "./Error"
 
 import * as _ from "lodash"
 
@@ -251,7 +251,7 @@ class Matrix extends BaseMatrix {
 class SquareMatrix extends BaseMatrix {
   constructor(props: IMatrix) {
     if (props.rows != props.columns)
-      throw new HttpException(400, "Row and column counts do not match")
+      throw new BadRequest("Row and column counts do not match")
     super(props)
   }
 
@@ -306,7 +306,7 @@ class SquareMatrix extends BaseMatrix {
   inverse() {
     // if matrix is singular, throw error that the matrix is singular
     if (this.calcDeterminant() === 0)
-      throw new HttpException(400, "Matrix is singular; No inverse exists")
+      throw new BadRequest("Matrix is singular; No inverse exists")
 
     const rrefActions = this.toRREF()
 

@@ -12,6 +12,7 @@ import { Server } from "http"
 // import methods to be tested
 import Test from "../controllers/test"
 import Matrix from "../controllers/matrix"
+import Logic from "../controllers/logic"
 
 // beforeEach management
 let route: string, method, server: Server, url: string
@@ -29,6 +30,10 @@ const toTest = [
   {
     route: "/matrix/inverse",
     method: Matrix.calcInverse,
+  },
+  {
+    route: "/logic/truthTable",
+    method: Logic.generateTruthTable,
   },
 ]
 
@@ -150,6 +155,62 @@ describe("API tests", () => {
           chai
             .expect(res.body.message)
             .to.equal("Matrix is singular; No inverse exists")
+        })
+    })
+  })
+
+  describe("/api/logic/truthTable", () => {
+    before(start)
+    after(stop)
+
+    it("should succeed for a valid logic expression", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          expression: "!(p & q)",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(200)
+        })
+    })
+
+    it("should obtain 400 if expression is missing right parenthesis", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          expression: "!(p & q",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai.expect(res.body.message).to.equal("Missing right parenthesis")
+        })
+    })
+
+    it("should obtain 400 if expression is missing left parenthesis", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          expression: "!p & q)",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai.expect(res.body.message).to.equal("Missing left parenthesis")
+        })
+    })
+
+    it("should obtain 400 if expression has two variables in a row", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          expression: "!p q & r",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai.expect(res.body.message).to.equal("Missing binary operator")
         })
     })
   })
