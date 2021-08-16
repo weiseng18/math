@@ -159,7 +159,7 @@ const Page = () => {
                 <Tr>
                   {variables.length > 0 &&
                     variables.map((one) => (
-                      <Th border="solid black 1px" textAlign="center">
+                      <Th key={one} border="solid black 1px" textAlign="center">
                         ${logicTextBf(one)}$
                       </Th>
                     ))}
@@ -172,7 +172,11 @@ const Page = () => {
                 {booleans.length > 0 &&
                   booleans.map((row, idx) => {
                     let tableRow = row.map((cell) => (
-                      <Td border="solid black 1px" textAlign="center">
+                      <Td
+                        key={cell}
+                        border="solid black 1px"
+                        textAlign="center"
+                      >
                         {cell ? "T" : "F"}
                       </Td>
                     ))
