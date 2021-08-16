@@ -25,11 +25,9 @@ interface IToken {
 
 class SyntaxTree {
   tokens: IToken[]
-  variables: { [varName: string]: number[] }
 
-  constructor(props: IExpressionInfo) {
-    this.tokens = props.tokens
-    this.variables = props.variables
+  constructor(tokens: IToken[]) {
+    this.tokens = tokens
   }
 
   newNullNode() {

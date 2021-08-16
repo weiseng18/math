@@ -144,7 +144,7 @@ export default () => {
 
         logicStrings.forEach((str, idx) => {
           const res = tokenizer.tokenize(str)
-          const tree = new SyntaxTree(res)
+          const tree = new SyntaxTree(res.tokens)
           const node = tree.build()
           const stringified = tree.toObj(node)
 
@@ -180,7 +180,7 @@ export default () => {
 
         logicStrings.forEach((str, idx) => {
           const res = tokenizer.tokenize(str)
-          const tree = new SyntaxTree(res)
+          const tree = new SyntaxTree(res.tokens)
           const node = tree.build()
           checkers[idx].forEach((obj) => {
             const evaluated = tree.eval(node, obj.mask)

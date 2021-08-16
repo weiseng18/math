@@ -34,10 +34,7 @@ class TruthTableGenerator {
     // 1d array containing the result, evaluated by substituting the booleans
     let ansArray = []
 
-    let tree = new SyntaxTree({
-      tokens: this.tokens,
-      variables: this.variablesInfo,
-    })
+    let tree = new SyntaxTree(this.tokens)
     const node = tree.build()
 
     for (let i = 0; i < bin; i++) {
