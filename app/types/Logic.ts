@@ -1,4 +1,4 @@
-enum LogicToken {
+export enum LogicToken {
   LEFT_BRACKET = "(",
   RIGHT_BRACKET = ")",
   NEGATION = "!",
@@ -7,7 +7,7 @@ enum LogicToken {
   IMPLIES = "=>",
 }
 
-interface IExpressionInfo {
+export interface IExpressionInfo {
   tokens: {
     type: string
     value: string
@@ -15,8 +15,6 @@ interface IExpressionInfo {
   variables: { [varName: string]: number[] }
 }
 
-interface BitmaskObject {
+export interface BitmaskObject {
   [key: string]: boolean
 }
-
-export { LogicToken, IExpressionInfo, BitmaskObject }
