@@ -187,5 +187,18 @@ describe("API tests", () => {
           chai.expect(res.body.message).to.equal("Missing right parenthesis")
         })
     })
+
+    it("should obtain 400 if expression is missing left parenthesis", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          expression: "!p & q)",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai.expect(res.body.message).to.equal("Missing left parenthesis")
+        })
+    })
   })
 })

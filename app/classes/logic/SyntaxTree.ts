@@ -88,6 +88,12 @@ class SyntaxTree {
           cur = null
         }
       }
+
+      // if unclosedBrackets < 0, this means that the SyntaxTree tried to close a bracket that has not been opened.
+      // As such, this is a missing left parenthesis
+      if (unclosedBrackets < 0) {
+        throw new BadRequest("Missing left parenthesis")
+      }
     }
 
     while (stack.length > 0) {
