@@ -155,6 +155,7 @@ const Page = () => {
               size="sm"
               w="auto"
               border="solid black 1px"
+              key={expression}
             >
               <Thead>
                 <Tr>
