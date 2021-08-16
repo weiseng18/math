@@ -1,5 +1,7 @@
 import { LogicToken, LogicTokenType, BitmaskObject } from "../../types/Logic"
 
+import { BadRequest } from "../Error"
+
 class Node {
   value: string
   type: string
@@ -91,6 +93,11 @@ class SyntaxTree {
     while (stack.length > 0) {
       const newTop = stack.pop()
       cur = this.handleOperatorWithNode(newTop, cur)
+    }
+
+    // if there are still unclosed brackets, throw error
+    if (unclosedBrackets > 0) {
+      throw new BadRequest("Missing right parenthesis")
     }
 
     return cur
