@@ -80,14 +80,14 @@ const convertTokenizedLogicExpressionToLatex = (expr) => {
   expr.forEach((token) => {
     if (token.type === "VAR") {
       if (processNot) {
-        inner += "{}^{\\sem}\\textbf{" + token.value + "}"
+        inner += "{}^{\\sim}\\textbf{" + token.value + "}"
         processNot = false
       } else inner += "\\textbf{" + token.value + "}"
     } else {
       // (, ), !, &, |, =>
       if (token.value === "(") {
         if (processNot) {
-          inner += "{}^{\\sem}("
+          inner += "{}^{\\sim}("
           processNot = false
         } else inner += "("
       } else if (token.value === ")") inner += ")"
