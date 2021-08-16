@@ -1,5 +1,6 @@
 import {
   Button,
+  Code,
   Container,
   HStack,
   Input,
@@ -17,6 +18,8 @@ import { useEffect, useState } from "react"
 
 import Router, { useRouter } from "next/router"
 import axios from "axios"
+
+import { LogicToken } from "frontend/constants"
 
 import {
   logicTextBf,
@@ -104,6 +107,15 @@ const Page = () => {
   return (
     <Container maxW="100vw" margin="0" padding="0" overflowX="hidden">
       <VStack spacing={4} w="100vw" px="15vw" py="40px" h="100%">
+        {/* display the tokens that can be used */}
+        <HStack spacing={4}>
+          <Text>Supported syntax:</Text>
+          {Object.keys(LogicToken).map((key) => (
+            <Code>{LogicToken[key]}</Code>
+          ))}
+          <Code>A-Z</Code>
+          <Code>a-z</Code>
+        </HStack>
         <HStack spacing={4} w="100%">
           <Input
             isRequired
