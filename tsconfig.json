@@ -1,6 +1,10 @@
 {
-  "include": ["./app/**/*"],
-  "exclude": ["node_modules"],
+  "include": [
+    "./app/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
@@ -9,14 +13,19 @@
     "esModuleInterop": true,
     "allowJs": true,
     "noImplicitAny": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "jsx": "preserve",
     "isolatedModules": true,
-    "jsx": "preserve"
+    "noUnusedLocals": true
   }
 }

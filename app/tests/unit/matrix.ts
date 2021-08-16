@@ -208,7 +208,8 @@ export default () => {
           columns: array[0].length,
           entries: array,
         })
-        const actions = matrix.toREF()
+        // not checking actions
+        matrix.toREF()
         const res = matrix.echelonStatus()
         chai.expect(res).to.not.equal(EchelonType.NONE)
       })
@@ -235,7 +236,8 @@ export default () => {
           columns: array[0].length,
           entries: array,
         })
-        const actions = matrix.toRREF()
+        // not checking actions
+        matrix.toRREF()
         const res = matrix.echelonStatus()
         chai.expect(res).to.equal(EchelonType.RREF)
       })
@@ -314,7 +316,8 @@ export default () => {
           columns: arr[0].length,
           entries: arr,
         })
-        const actions = matrix.inverse()
+        // not checking actions
+        matrix.inverse()
         // compare with the answer
         const inverse = inverses[idx]
         chai.expect(matrix.entries).to.eql(inverse)

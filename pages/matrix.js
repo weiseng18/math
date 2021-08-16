@@ -15,7 +15,7 @@ import axios from "axios"
 import {
   convert2DArrayToMatrix,
   convert2DArraysToAugmentedMatrix,
-} from "../utils"
+} from "frontend/utils"
 
 const Page = () => {
   const [query, setQuery] = useState("") // text in the input
