@@ -52,7 +52,8 @@ const Page = () => {
     // empty query
     if (query === "" && passedQuery === "") return
 
-    const expr = query === "" ? passedQuery : query
+    // only fall back to query, if passedQuery is empty
+    const expr = passedQuery === "" ? query : passedQuery
 
     try {
       setLoading(true)
@@ -94,6 +95,8 @@ const Page = () => {
         setQuery("")
         setBooleans([])
         setAnswers([])
+        setVariables([])
+        setExpression([])
       }
     } else {
       MathJax.typeset()
@@ -154,6 +157,7 @@ const Page = () => {
               size="sm"
               w="auto"
               border="solid black 1px"
+              key={expression}
             >
               <Thead>
                 <Tr>

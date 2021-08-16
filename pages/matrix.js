@@ -50,7 +50,7 @@ const Page = () => {
       setLoading(true)
 
       // split query into action and matrix
-      let arr = query === "" ? passedQuery.split(" ") : query.split(" ")
+      let arr = passedQuery === "" ? query.split(" ") : passedQuery.split(" ")
       const action = arr.shift()
       const matrix = arr.join(" ")
 
