@@ -57,4 +57,54 @@ const convert2DArraysToAugmentedMatrix = (left, right) => {
   return mathString
 }
 
-export { convert2DArrayToMatrix, convert2DArraysToAugmentedMatrix }
+/**
+ * Wraps a variable in \textbf{} environment. Currently only used for variables in a logic expression
+ * @param {*} variable string
+ * @returns variable wrapped in \textbf{}
+ */
+const logicTextBf = (variable) => {
+  return "\\textbf{" + variable + "}"
+}
+
+/**
+ * Converts a tokenized logic expression into a Latex string.
+ * @param {*} expr tokenized logic expression
+ * @returns Tokenized logic expression, but in Latex string.
+ */
+const convertTokenizedLogicExpressionToLatex = (expr) => {
+  const prefix = "\\begin{equation*}"
+  const suffix = "\\end{equation*}"
+
+  let inner = ""
+  let processNot = false
+  expr.forEach((token) => {
+    if (token.type === "VAR") {
+      if (processNot) {
+        inner += "{}^{\\sem}\\textbf{" + token.value + "}"
+        processNot = false
+      } else inner += "\\textbf{" + token.value + "}"
+    } else {
+      // (, ), !, &, |, =>
+      if (token.value === "(") {
+        if (processNot) {
+          inner += "{}^{\\sem}("
+          processNot = false
+        } else inner += "("
+      } else if (token.value === ")") inner += ")"
+      else if (token.value === "!") processNot = true
+      else if (token.value === "&") inner += "\\land"
+      else if (token.value === "|") inner += "\\lor"
+      else if (token.value === "=>") inner += "\\rightarrow"
+    }
+  })
+
+  const mathString = prefix + inner + suffix
+  return mathString
+}
+
+export {
+  convert2DArrayToMatrix,
+  convert2DArraysToAugmentedMatrix,
+  logicTextBf,
+  convertTokenizedLogicExpressionToLatex,
+}
