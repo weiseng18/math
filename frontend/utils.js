@@ -71,10 +71,11 @@ const logicTextBf = (variable) => {
 /**
  * Converts a tokenized logic expression into a Latex string.
  * @param {*} expr tokenized logic expression
+ * @param {*} isLarge whether to render the expression larger or not
  * @returns Tokenized logic expression, but in Latex string.
  */
-const convertTokenizedLogicExpressionToLatex = (expr) => {
-  const prefix = "\\begin{equation*}"
+const convertTokenizedLogicExpressionToLatex = (expr, isLarge = false) => {
+  const prefix = "\\begin{equation*}" + (isLarge ? "\\Large" : "")
   const suffix = "\\end{equation*}"
 
   let inner = ""

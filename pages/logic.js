@@ -154,7 +154,9 @@ const Page = () => {
                 <Tr>
                   {variables.length > 0 &&
                     variables.map((one) => <Td>${logicTextBf(one)}$</Td>)}
-                  <Th>{convertTokenizedLogicExpressionToLatex(expression)}</Th>
+                  <Th>
+                    {convertTokenizedLogicExpressionToLatex(expression, true)}
+                  </Th>
                 </Tr>
               </Thead>
               <Tbody>
