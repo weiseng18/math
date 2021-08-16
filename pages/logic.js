@@ -149,12 +149,21 @@ const Page = () => {
               <Text>Your input is interpreted as:</Text>
               <Text>{convertTokenizedLogicExpressionToLatex(expression)}</Text>
             </HStack>
-            <Table variant="striped" size="sm" w="auto">
+            <Table
+              variant="unstyled"
+              size="sm"
+              w="auto"
+              border="solid black 1px"
+            >
               <Thead>
                 <Tr>
                   {variables.length > 0 &&
-                    variables.map((one) => <Th>${logicTextBf(one)}$</Th>)}
-                  <Th>
+                    variables.map((one) => (
+                      <Th border="solid black 1px" textAlign="center">
+                        ${logicTextBf(one)}$
+                      </Th>
+                    ))}
+                  <Th border="solid black 1px" textAlign="center">
                     {convertTokenizedLogicExpressionToLatex(expression, true)}
                   </Th>
                 </Tr>
@@ -163,11 +172,17 @@ const Page = () => {
                 {booleans.length > 0 &&
                   booleans.map((row, idx) => {
                     let tableRow = row.map((cell) => (
-                      <Td>{cell ? "T" : "F"}</Td>
+                      <Td border="solid black 1px" textAlign="center">
+                        {cell ? "T" : "F"}
+                      </Td>
                     ))
-                    let ans = <Td>{answers[idx] ? "T" : "F"}</Td>
+                    let ans = (
+                      <Td border="solid black 1px" textAlign="center">
+                        {answers[idx] ? "T" : "F"}
+                      </Td>
+                    )
                     tableRow.push(ans)
-                    return <Tr>{tableRow}</Tr>
+                    return <Tr border="solid black 1px">{tableRow}</Tr>
                   })}
               </Tbody>
             </Table>
