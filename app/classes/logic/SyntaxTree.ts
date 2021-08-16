@@ -1,9 +1,4 @@
-import {
-  IExpressionInfo,
-  LogicToken,
-  LogicTokenType,
-  BitmaskObject,
-} from "../../types/Logic"
+import { LogicToken, LogicTokenType, BitmaskObject } from "../../types/Logic"
 
 class Node {
   value: string
