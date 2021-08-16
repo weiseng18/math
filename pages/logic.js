@@ -52,7 +52,8 @@ const Page = () => {
     // empty query
     if (query === "" && passedQuery === "") return
 
-    const expr = query === "" ? passedQuery : query
+    // only fall back to query, if passedQuery is empty
+    const expr = passedQuery === "" ? query : passedQuery
 
     try {
       setLoading(true)
