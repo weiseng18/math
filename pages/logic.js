@@ -149,7 +149,7 @@ const Page = () => {
               <Text>Your input is interpreted as:</Text>
               <Text>{convertTokenizedLogicExpressionToLatex(expression)}</Text>
             </HStack>
-            <Table variant="striped" size="sm">
+            <Table variant="striped" size="sm" w="auto">
               <Thead>
                 <Tr>
                   {variables.length > 0 &&
