@@ -46,6 +46,16 @@ API: `/api/matrix/inverse?matrix=[[1,2],[3,4]]`
 
 Description: Obtains the inverse of a matrix. The algorithm used reduces the original matrix to RREF while playing the same row operations onto an identity matrix of the same dimensions.
 
+### Generate a truth table, given a mathematical logic expression
+
+Frontend page: `/logic`
+
+Frontend usage: `!(p | q)`
+
+API: `/api/logic/truthTable?expression=!(p | q)`
+
+Description: An abstract syntax tree is built, and variables are detected. Every combinations of `true` and `false` is substituted into the variables in the logic expression, and the expression is evaluated for each combination, resulting in the truth table for the expression.
+
 ## Caveats
 
 - Does not support fraction input
