@@ -32,6 +32,10 @@ const toTest = [
     method: Matrix.calcInverse,
   },
   {
+    route: "/matrix/rref",
+    method: Matrix.reduceRREF,
+  },
+  {
     route: "/logic/truthTable",
     method: Logic.generateTruthTable,
   },
@@ -155,6 +159,23 @@ describe("API tests", () => {
           chai
             .expect(res.body.message)
             .to.equal("Matrix is singular; No inverse exists")
+        })
+    })
+  })
+
+  describe("/api/matrix/rref", () => {
+    before(start)
+    after(stop)
+
+    it("should successfully perform rref", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1,0,0],[0,4,0],[0,0,2]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(200)
         })
     })
   })
