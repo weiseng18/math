@@ -1,3 +1,5 @@
+import { LogicToken } from "./constants"
+
 /**
  * Converts Javascript 2D array into a string that represents the matrix in Latex.
  * @param {*} array 2-dimensional array
@@ -85,16 +87,16 @@ const convertTokenizedLogicExpressionToLatex = (expr) => {
       } else inner += "\\textbf{" + token.value + "}"
     } else {
       // (, ), !, &, |, =>
-      if (token.value === "(") {
+      if (token.value === LogicToken.LEFT_BRACKET) {
         if (processNot) {
           inner += "{}^{\\sim}("
           processNot = false
         } else inner += "("
-      } else if (token.value === ")") inner += ")"
-      else if (token.value === "!") processNot = true
-      else if (token.value === "&") inner += "\\land"
-      else if (token.value === "|") inner += "\\lor"
-      else if (token.value === "=>") inner += "\\rightarrow"
+      } else if (token.value === LogicToken.RIGHT_BRACKET) inner += ")"
+      else if (token.value === LogicToken.NEGATION) processNot = true
+      else if (token.value === LogicToken.BINARY_AND) inner += "\\land"
+      else if (token.value === LogicToken.BINARY_OR) inner += "\\lor"
+      else if (token.value === LogicToken.IMPLIES) inner += "\\rightarrow"
     }
   })
 
