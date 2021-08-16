@@ -3,7 +3,6 @@ import { LogicToken, IExpressionInfo } from "../../types/Logic"
 import * as _ from "lodash"
 
 class Tokenizer {
-  private keys: string[] // enum name (e.g. BINARY_AND)
   private values: string[] // enum value (e.g. &)
 
   private operatorChars: string[] // e.g. => is an operator, but = and > are both valid chars
@@ -11,8 +10,6 @@ class Tokenizer {
   private alphaChars: string[] // e.g. => is an operator, but = and > are both valid chars
 
   constructor() {
-    this.keys = Object.keys(LogicToken)
-
     const vals = Object.keys(LogicToken).map(
       (key) => LogicToken[key as keyof typeof LogicToken]
     )
