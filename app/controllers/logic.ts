@@ -21,12 +21,12 @@ const generateTruthTable = (req: VercelRequest, res: VercelResponse) => {
 
     // Post-processing
     const variables = Object.keys(tokens.variables)
-    const tokenizedExpression = tokens.tokens.map((one) => one.value)
+    const expr = tokens.tokens
 
     res.json({
       ...result,
       variables,
-      expression: tokenizedExpression,
+      expression: expr,
     })
   } catch (err) {
     const errorCode = _.get(err, "code", 500)
