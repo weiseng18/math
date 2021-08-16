@@ -65,7 +65,7 @@ const convert2DArraysToAugmentedMatrix = (left, right) => {
  * @returns variable wrapped in \textbf{}
  */
 const logicTextBf = (variable) => {
-  return "\\textbf{" + variable + "}"
+  return "\\Large\\textbf{" + variable + "}"
 }
 
 /**

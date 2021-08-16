@@ -153,7 +153,7 @@ const Page = () => {
               <Thead>
                 <Tr>
                   {variables.length > 0 &&
-                    variables.map((one) => <Td>${logicTextBf(one)}$</Td>)}
+                    variables.map((one) => <Th>${logicTextBf(one)}$</Th>)}
                   <Th>
                     {convertTokenizedLogicExpressionToLatex(expression, true)}
                   </Th>
