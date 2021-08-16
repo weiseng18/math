@@ -177,7 +177,13 @@ const Page = () => {
                       </Td>
                     ))
                     let ans = (
-                      <Td border="solid black 1px" textAlign="center">
+                      <Td
+                        border="solid black 1px"
+                        textAlign="center"
+                        color="white"
+                        bgColor={answers[idx] ? "green.500" : "red.500"}
+                        fontWeight="600"
+                      >
                         {answers[idx] ? "T" : "F"}
                       </Td>
                     )
