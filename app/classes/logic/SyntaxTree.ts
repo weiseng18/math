@@ -52,14 +52,19 @@ class SyntaxTree {
       const token = this.tokens[i]
       if (token.value === LogicToken.LEFT_BRACKET) {
         unclosedBrackets++
+        stack.push({
+          node: null,
+          operator: token,
+        })
       } else if (token.value === LogicToken.RIGHT_BRACKET) {
         unclosedBrackets--
-        if (stack.length > 0 && unclosedBrackets === 0) {
-          // complete remaining operations since the bracket is closed
-          while (stack.length > 0) {
-            const newTop = stack.pop()
-            cur = this.handleOperatorWithNode(newTop, cur)
-          }
+
+        // complete remaining operations since the bracket is closed
+        let done = false
+        while (stack.length > 0 && !done) {
+          const newTop = stack.pop()
+          if (newTop.operator.value === LogicToken.LEFT_BRACKET) done = true
+          else cur = this.handleOperatorWithNode(newTop, cur)
         }
       } else if (token.type === LogicTokenType.VARIABLE) {
         // The token is a variable
@@ -69,10 +74,16 @@ class SyntaxTree {
           throw new BadRequest("Missing binary operator")
         }
 
-        if (stack.length > 0 && unclosedBrackets === 0) {
+        if (
+          stack.length > 0 &&
+          stack[stack.length - 1].operator.value !== "("
+        ) {
           const top = stack.pop()
           cur = this.handleOperatorWithVariable(top, token)
-          while (stack.length > 0) {
+          while (
+            stack.length > 0 &&
+            stack[stack.length - 1].operator.value !== "("
+          ) {
             const newTop = stack.pop()
             cur = this.handleOperatorWithNode(newTop, cur)
           }
