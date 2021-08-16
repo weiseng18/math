@@ -32,6 +32,10 @@ const toTest = [
     method: Matrix.calcInverse,
   },
   {
+    route: "/matrix/rref",
+    method: Matrix.reduceRREF,
+  },
+  {
     route: "/logic/truthTable",
     method: Logic.generateTruthTable,
   },
@@ -112,6 +116,34 @@ describe("API tests", () => {
             .to.equal("Row and column counts do not match")
         })
     })
+    it("should obtain 400 for 3 by 3 matrix with extra data", async () => {
+      // the backend treats this as a 3 by 3 matrix
+      // since it takes the number of elements in the 1st row as the number of columns
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1,0,0],[0,4,0,1,2],[0,0,2]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai.expect(res.body.message).to.equal("Matrix is not rectangle")
+        })
+    })
+    it("should obtain 400 for 3 by 3 matrix with missing data", async () => {
+      // the backend treats this as a 3 by 3 matrix
+      // since it takes the number of elements in the 1st row as the number of columns
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1,0,0],[0,4],[0,0]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai.expect(res.body.message).to.equal("Matrix is not rectangle")
+        })
+    })
   })
 
   describe("/api/matrix/inverse", () => {
@@ -155,6 +187,79 @@ describe("API tests", () => {
           chai
             .expect(res.body.message)
             .to.equal("Matrix is singular; No inverse exists")
+        })
+    })
+    it("should obtain 400 for 3 by 3 matrix with extra data", async () => {
+      // the backend treats this as a 3 by 3 matrix
+      // since it takes the number of elements in the 1st row as the number of columns
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1,0,0],[0,4,0,1,2],[0,0,2]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai.expect(res.body.message).to.equal("Matrix is not rectangle")
+        })
+    })
+    it("should obtain 400 for 3 by 3 matrix with missing data", async () => {
+      // the backend treats this as a 3 by 3 matrix
+      // since it takes the number of elements in the 1st row as the number of columns
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1,0,0],[0,4],[0,0]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai.expect(res.body.message).to.equal("Matrix is not rectangle")
+        })
+    })
+  })
+
+  describe("/api/matrix/rref", () => {
+    before(start)
+    after(stop)
+
+    it("should successfully perform rref", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1,0,0],[0,4,0],[0,0,2]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(200)
+        })
+    })
+    it("should obtain 400 for 3 by 1 matrix with extra data", async () => {
+      // the backend treats this as a 3 by 1 matrix
+      // since it takes the number of elements in the 1st row as the number of columns
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1],[3,4],[5,6]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai.expect(res.body.message).to.equal("Matrix is not rectangle")
+        })
+    })
+    it("should obtain 400 for 3 by 2 matrix with missing data", async () => {
+      // the backend treats this as a 3 by 2 matrix
+      // since it takes the number of elements in the 1st row as the number of columns
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          matrix: "[[1,2],[3],[5]]",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai.expect(res.body.message).to.equal("Matrix is not rectangle")
         })
     })
   })

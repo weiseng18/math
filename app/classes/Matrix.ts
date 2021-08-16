@@ -21,8 +21,14 @@ abstract class BaseMatrix {
     this.rows = props.rows
     this.columns = props.columns
 
-    if (props.entries) this.entries = props.entries
-    else {
+    if (props.entries) {
+      // check that matrix is a perfect rectangle
+      for (let i = 0; i < this.rows; i++)
+        if (props.entries[i].length !== props.columns)
+          throw new BadRequest("Matrix is not rectangle")
+
+      this.entries = props.entries
+    } else {
       // initialize a zero matrix
       let tmp = [],
         row = []
