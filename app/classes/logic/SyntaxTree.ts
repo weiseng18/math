@@ -46,6 +46,8 @@ class SyntaxTree {
     let stack: IStackItem[] = []
     let unclosedBrackets = 0
 
+    let prevToken
+
     for (let i = 0; i < this.tokens.length; i++) {
       const token = this.tokens[i]
       if (token.value === LogicToken.LEFT_BRACKET) {
@@ -61,6 +63,12 @@ class SyntaxTree {
         }
       } else if (token.type === LogicTokenType.VARIABLE) {
         // The token is a variable
+
+        if (prevToken === LogicTokenType.VARIABLE) {
+          // two variables in a row => syntax error
+          throw new BadRequest("Missing binary operator")
+        }
+
         if (stack.length > 0 && unclosedBrackets === 0) {
           const top = stack.pop()
           cur = this.handleOperatorWithVariable(top, token)
@@ -94,6 +102,9 @@ class SyntaxTree {
       if (unclosedBrackets < 0) {
         throw new BadRequest("Missing left parenthesis")
       }
+
+      // store prev token
+      prevToken = token.type
     }
 
     while (stack.length > 0) {

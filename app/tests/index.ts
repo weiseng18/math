@@ -200,5 +200,18 @@ describe("API tests", () => {
           chai.expect(res.body.message).to.equal("Missing left parenthesis")
         })
     })
+
+    it("should obtain 400 if expression has two variables in a row", async () => {
+      await chai
+        .request(url)
+        .get(route)
+        .query({
+          expression: "!p q & r",
+        })
+        .then((res) => {
+          chai.expect(res.status).to.equal(400)
+          chai.expect(res.body.message).to.equal("Missing binary operator")
+        })
+    })
   })
 })
