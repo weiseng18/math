@@ -1,12 +1,12 @@
 // standard testing modules
 import chai from "chai"
 
-import { LogicTokenType } from "../../types/Logic"
+import { LogicTokenType } from "app/types/Logic"
 
-// import stuff to be tested
-import Tokenizer from "../../classes/logic/Tokenizer"
-import { SyntaxTree } from "../../classes/logic/SyntaxTree"
-import TruthTableGenerator from "../../classes/logic/TruthTableGenerator"
+// import classes to be tested
+import Tokenizer from "app/classes/logic/Tokenizer"
+import { SyntaxTree } from "app/classes/logic/SyntaxTree"
+import TruthTableGenerator from "app/classes/logic/TruthTableGenerator"
 
 export default () => {
   describe("Tokenizer", () => {

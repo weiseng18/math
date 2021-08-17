@@ -1,11 +1,11 @@
 // standard testing modules
 import chai from "chai"
 
-import { EchelonType } from "../../types/Matrix"
-import { range } from "../../utils/misc"
+import { EchelonType } from "app/types/Matrix"
+import { range } from "app/utils/misc"
 
-// import stuff to be tested
-import { Matrix, SquareMatrix } from "../../classes/Matrix"
+// import classes to be tested
+import { Matrix, SquareMatrix } from "app/classes/Matrix"
 
 export default () => {
   describe("echelonStatus", () => {
