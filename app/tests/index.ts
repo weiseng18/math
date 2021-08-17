@@ -9,10 +9,10 @@ import listen from "test-listen"
 // types
 import { Server } from "http"
 
-// import methods to be tested
-import Test from "../controllers/test"
-import Matrix from "../controllers/matrix"
-import Logic from "../controllers/logic"
+// import controller methods to be tested
+import Test from "app/controllers/test"
+import Matrix from "app/controllers/matrix"
+import Logic from "app/controllers/logic"
 
 // beforeEach management
 let route: string, method, server: Server, url: string
