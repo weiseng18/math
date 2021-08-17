@@ -1,8 +1,8 @@
 import { VercelRequest, VercelResponse } from "@vercel/node"
 import * as _ from "lodash"
 
-import Tokenizer from "../classes/logic/Tokenizer"
-import TruthTableGenerator from "../classes/logic/TruthTableGenerator"
+import Tokenizer from "app/classes/logic/Tokenizer"
+import TruthTableGenerator from "app/classes/logic/TruthTableGenerator"
 
 const generateTruthTable = (req: VercelRequest, res: VercelResponse) => {
   try {

@@ -1,6 +1,6 @@
-import { LogicToken, LogicTokenType, BitmaskObject } from "../../types/Logic"
+import { LogicToken, LogicTokenType, BitmaskObject } from "app/types/Logic"
 
-import { BadRequest } from "../Error"
+import { BadRequest } from "app/classes/Error"
 
 class Node {
   value: string

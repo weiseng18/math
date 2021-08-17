@@ -1,4 +1,4 @@
-import { LogicToken, LogicTokenType, IExpressionInfo } from "../../types/Logic"
+import { LogicToken, LogicTokenType, IExpressionInfo } from "app/types/Logic"
 
 import * as _ from "lodash"
 

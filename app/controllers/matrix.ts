@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from "@vercel/node"
 import * as _ from "lodash"
 
-import { Matrix, SquareMatrix } from "../classes/Matrix"
+import { Matrix, SquareMatrix } from "app/classes/Matrix"
 
 const calcDeterminant = (req: VercelRequest, res: VercelResponse) => {
   try {
