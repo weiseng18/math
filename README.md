@@ -46,6 +46,16 @@ API: `/api/matrix/inverse?matrix=[[1,2],[3,4]]`
 
 Description: Obtains the inverse of a matrix. The algorithm used reduces the original matrix to RREF while playing the same row operations onto an identity matrix of the same dimensions.
 
+### "Echelon status" of a matrix
+
+Frontend page: `/matrix`
+
+Frontend usage: `status [[1,2],[3,4]]`
+
+API: `/api/matrix/status?matrix=[[1,2],[3,4]]`
+
+Description: Returns a string, either "Neither", "Row echelon form", or "Reduced row echelon form". Determines the form of the matrix.
+
 ### Generate a truth table, given a mathematical logic expression
 
 Frontend page: `/logic`

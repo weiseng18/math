@@ -85,8 +85,36 @@ const calcInverse = (req: VercelRequest, res: VercelResponse) => {
   }
 }
 
+const echelonStatus = (req: VercelRequest, res: VercelResponse) => {
+  try {
+    let arr
+    // string array
+    if (Array.isArray(req.query.matrix))
+      arr = JSON.parse(req.query.matrix.join())
+    else arr = JSON.parse(req.query.matrix)
+
+    const rows = arr.length
+    const cols = arr[0].length
+
+    const matrix = new Matrix({
+      rows,
+      columns: cols,
+      entries: arr,
+    })
+
+    const status = matrix.echelonStatus()
+    res.json({
+      type: status,
+    })
+  } catch (err) {
+    const errorCode = _.get(err, "code", 500)
+    res.status(errorCode).json({ message: err.message })
+  }
+}
+
 export default {
   calcDeterminant,
   reduceRREF,
   calcInverse,
+  echelonStatus,
 }
