@@ -1,12 +1,12 @@
 // standard testing modules
 import chai from "chai"
 
-import { LogicTokenType } from "../../types/Logic"
+import { LogicTokenType } from "app/types/Logic"
 
-// import stuff to be tested
-import Tokenizer from "../../classes/logic/Tokenizer"
-import { SyntaxTree } from "../../classes/logic/SyntaxTree"
-import TruthTableGenerator from "../../classes/logic/TruthTableGenerator"
+// import classes to be tested
+import Tokenizer from "app/classes/logic/Tokenizer"
+import { SyntaxTree } from "app/classes/logic/SyntaxTree"
+import TruthTableGenerator from "app/classes/logic/TruthTableGenerator"
 
 export default () => {
   describe("Tokenizer", () => {
@@ -14,12 +14,19 @@ export default () => {
       const tokenizer = new Tokenizer()
 
       it("should parse strings without invalid chars properly", () => {
-        const logicStrings = ["!p", "p & q", "p | q => q", "!(p | q)"]
+        const logicStrings = [
+          "!p",
+          "p & q",
+          "p | q => q",
+          "!(p | q)",
+          "!p <=> q",
+        ]
         const logicParsed = [
           ["!", "p"],
           ["p", "&", "q"],
           ["p", "|", "q", "=>", "q"],
           ["!", "(", "p", "|", "q", ")"],
+          ["!", "p", "<=>", "q"],
         ]
         const variables = [
           {
@@ -36,6 +43,10 @@ export default () => {
           {
             p: [2],
             q: [4],
+          },
+          {
+            p: [1],
+            q: [3],
           },
         ]
         logicStrings.forEach((str, idx) => {
@@ -105,7 +116,13 @@ export default () => {
     const tokenizer = new Tokenizer()
     describe("SyntaxTree.toObj", () => {
       it("should generate an accurate syntax tree", () => {
-        const logicStrings = ["!p", "p & q", "p | q => q", "!(p | q)"]
+        const logicStrings = [
+          "!p",
+          "p & q",
+          "p | q => q",
+          "!(p | q)",
+          "!p <=> q",
+        ]
 
         const treeObjects = [
           {
@@ -182,6 +199,27 @@ export default () => {
               },
             },
           },
+          {
+            left: {
+              left: {},
+              right: {
+                left: {},
+                right: {},
+                type: "VAR",
+                value: "p",
+              },
+              type: "OP",
+              value: "!",
+            },
+            right: {
+              left: {},
+              right: {},
+              type: "VAR",
+              value: "q",
+            },
+            type: "OP",
+            value: "<=>",
+          },
         ]
 
         logicStrings.forEach((str, idx) => {
@@ -237,7 +275,13 @@ export default () => {
     describe("TruthTableGenerator.generate", () => {
       const tokenizer = new Tokenizer()
       it("should correctly evaluate truth table, given a tokenized expression and variable info", () => {
-        const logicStrings = ["!p", "p & q", "!(p | q)", "(p => q) => r"]
+        const logicStrings = [
+          "!p",
+          "p & q",
+          "!(p | q)",
+          "(p => q) => r",
+          "!p <=> q",
+        ]
 
         const answers = [
           { booleans: [[false], [true]], answers: [true, false] },
@@ -271,6 +315,15 @@ export default () => {
               [true, true, true],
             ],
             answers: [false, true, false, true, true, true, false, true],
+          },
+          {
+            answers: [false, true, true, false],
+            booleans: [
+              [false, false],
+              [false, true],
+              [true, false],
+              [true, true],
+            ],
           },
         ]
 

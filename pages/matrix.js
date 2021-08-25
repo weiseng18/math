@@ -100,6 +100,24 @@ const Page = () => {
             query: { action: "rref", matrix },
           })
           break
+        case "status":
+          res = await axios.get("/api/matrix/status", {
+            params: {
+              matrix,
+            },
+          })
+          setQuestion(
+            "\\text{Is }" +
+              convert2DArrayToMatrix(matrixArray) +
+              "\\text{ in REF, RREF, or neither?}"
+          )
+          // say Neither instead of None
+          setAnswer(res.data.type === "None" ? "Neither" : res.data.type)
+          setActions([])
+          Router.push({
+            query: { action: "status", matrix },
+          })
+          break
         default:
           setLoading(false)
           setAnswer("")
@@ -181,10 +199,22 @@ const Page = () => {
               <Text>Your input is interpreted as:</Text>
               <Text>${convert2DArrayToMatrix(inputArray)}$</Text>
             </HStack>
-            <HStack spacing={1} bgColor="gray.200" padding={4}>
-              <Text>${question} = $</Text>
-              <Text>${answer}$</Text>
-            </HStack>
+            {router.query.action && router.query.action !== "status" && (
+              <HStack spacing={1} bgColor="gray.200" padding={4}>
+                <>
+                  <Text>${question} = $</Text>
+                  <Text>${answer}$</Text>
+                </>
+              </HStack>
+            )}
+            {router.query.action && router.query.action === "status" && (
+              <VStack spacing={4} bgColor="gray.200" padding={4}>
+                <>
+                  <Text>${question}$</Text>
+                  <Text>Ans: {answer}</Text>
+                </>
+              </VStack>
+            )}
             {router.query.action &&
               router.query.action === "rref" &&
               actions.length > 0 &&

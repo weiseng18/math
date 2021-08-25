@@ -1,8 +1,9 @@
 import { range } from "../utils/misc"
 
-import { EchelonType, RowOperation } from "../types/Matrix"
-import { leadingEntryIndex } from "../utils/Matrix"
-import { BadRequest } from "./Error"
+import { EchelonType, RowOperation } from "app/types/Matrix"
+import { leadingEntryIndex } from "app/utils/Matrix"
+
+import { BadRequest } from "app/classes/Error"
 
 import * as _ from "lodash"
 

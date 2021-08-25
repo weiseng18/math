@@ -1,8 +1,8 @@
 import * as _ from "lodash"
 
-import { SyntaxTree } from "./SyntaxTree"
+import { SyntaxTree } from "app/classes/logic/SyntaxTree"
 
-import { IExpressionInfo } from "../../types/Logic"
+import { IExpressionInfo } from "app/types/Logic"
 
 class TruthTableGenerator {
   tokens: {

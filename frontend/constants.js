@@ -5,6 +5,7 @@ const LogicToken = {
   BINARY_AND: "&",
   BINARY_OR: "|",
   IMPLIES: "=>",
+  BICONDITIONAL: "<=>",
 }
 
 export { LogicToken }

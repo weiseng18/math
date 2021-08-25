@@ -1,6 +1,6 @@
-import { LogicToken, LogicTokenType, BitmaskObject } from "../../types/Logic"
+import { LogicToken, LogicTokenType, BitmaskObject } from "app/types/Logic"
 
-import { BadRequest } from "../Error"
+import { BadRequest } from "app/classes/Error"
 
 class Node {
   value: string
@@ -167,6 +167,9 @@ class SyntaxTree {
       else if (root.value === LogicToken.IMPLIES)
         // !p || q (implication law)
         return !this.eval(root.left, mask) || this.eval(root.right, mask)
+      else if (root.value === LogicToken.BICONDITIONAL)
+        // true if p === q
+        return this.eval(root.left, mask) === this.eval(root.right, mask)
     } else {
       // unknowns, to be substituted
       const varName = root.value
