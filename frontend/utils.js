@@ -98,6 +98,8 @@ const convertTokenizedLogicExpressionToLatex = (expr, isLarge = false) => {
       else if (token.value === LogicToken.BINARY_AND) inner += "\\land"
       else if (token.value === LogicToken.BINARY_OR) inner += "\\lor"
       else if (token.value === LogicToken.IMPLIES) inner += "\\rightarrow"
+      else if (token.value === LogicToken.BICONDITIONAL)
+        inner += "\\leftrightarrow"
     }
   })
 
