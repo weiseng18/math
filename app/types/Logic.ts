@@ -5,6 +5,7 @@ export enum LogicToken {
   BINARY_AND = "&",
   BINARY_OR = "|",
   IMPLIES = "=>",
+  BICONDITIONAL = "<=>",
 }
 
 export enum LogicTokenType {

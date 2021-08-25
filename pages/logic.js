@@ -13,6 +13,8 @@ import {
   Tr,
   Th,
   Td,
+  Divider,
+  Heading,
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 
@@ -104,6 +106,7 @@ const Page = () => {
   }, [router.query])
 
   useEffect(() => {
+    MathJax.typeset()
     setLoading(false)
   }, [])
 
@@ -202,6 +205,26 @@ const Page = () => {
             </Table>
           </VStack>
         )}
+        <Divider py={8} />
+        <VStack py={8} spacing={4}>
+          <Heading alignSelf="flex-start">Note: Parsing issues</Heading>
+          <HStack spacing={2} flexWrap="wrap" alignSelf="flex-start">
+            <Code>{LogicToken.IMPLIES}</Code>
+            <Text>and</Text>
+            <Code>{LogicToken.BICONDITIONAL}</Code>
+            <Text>have the same precedence. Therefore, a statement like</Text>
+          </HStack>
+          <Text>$$p \leftrightarrow q \rightarrow r$$</Text>
+          <Text alignSelf="flex-start">
+            is ambiguous. However, the syntax parser assumes a left-to-right
+            evaluation is implied. So this will be interpreted as
+          </Text>
+          <Text>$$(p \leftrightarrow q) \rightarrow r$$</Text>
+          <Text alignSelf="flex-start">
+            Currently the parser does not insert brackets to show this
+            assumption.
+          </Text>
+        </VStack>
       </VStack>
     </Container>
   )
