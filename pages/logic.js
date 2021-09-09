@@ -106,7 +106,8 @@ const Page = () => {
   }, [router.query])
 
   useEffect(() => {
-    if (MathJax) MathJax.typeset()
+    if (MathJax && MathJax.typeset && typeof MathJax.typeset === "function")
+      MathJax.typeset()
     setLoading(false)
   }, [])
 
