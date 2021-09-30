@@ -2,6 +2,7 @@ import { Button, HStack, Input, Spinner, Text, VStack } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 
 import PageWrapper from "components/PageWrapper"
+import { LoadingSpinner } from "components/basic"
 
 import Router, { useRouter } from "next/router"
 import axios from "axios"
@@ -169,17 +170,7 @@ const Page = () => {
         </Button>
       </HStack>
       {error !== "" && <Text color="crimson">Error: {error}</Text>}
-      {loading && (
-        <HStack>
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="blue.500"
-            size="xl"
-          />
-        </HStack>
-      )}
+      {loading && <LoadingSpinner />}
       {answer !== "" && (
         <VStack
           key={inputArray.join() + question}
