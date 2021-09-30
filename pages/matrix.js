@@ -2,7 +2,7 @@ import { Button, HStack, Input, Spinner, Text, VStack } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 
 import PageWrapper from "components/PageWrapper"
-import { LoadingSpinner } from "components/basic"
+import { ErrorText, LoadingSpinner } from "components/basic"
 
 import Router, { useRouter } from "next/router"
 import axios from "axios"
@@ -169,7 +169,7 @@ const Page = () => {
           Submit
         </Button>
       </HStack>
-      {error !== "" && <Text color="crimson">Error: {error}</Text>}
+      {error && error !== "" && <ErrorText>{error}</ErrorText>}
       {loading && <LoadingSpinner />}
       {answer !== "" && (
         <VStack

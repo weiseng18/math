@@ -1,4 +1,8 @@
-import { HStack, Spinner } from "@chakra-ui/react"
+import { HStack, Spinner, Text } from "@chakra-ui/react"
+
+const ErrorText = ({ children }) => {
+  return <Text color="crimson">Error: {children}</Text>
+}
 
 const LoadingSpinner = () => {
   return (
@@ -14,4 +18,4 @@ const LoadingSpinner = () => {
   )
 }
 
-export { LoadingSpinner }
+export { ErrorText, LoadingSpinner }

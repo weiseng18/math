@@ -18,7 +18,7 @@ import {
 import { useEffect, useState } from "react"
 
 import PageWrapper from "components/PageWrapper"
-import { LoadingSpinner } from "components/basic"
+import { ErrorText, LoadingSpinner } from "components/basic"
 
 import Router, { useRouter } from "next/router"
 import axios from "axios"
@@ -139,7 +139,7 @@ const Page = () => {
           Submit
         </Button>
       </HStack>
-      {error !== "" && <Text color="crimson">Error: {error}</Text>}
+      {error && error !== "" && <ErrorText>{error}</ErrorText>}
       {loading && <LoadingSpinner />}
       {answers.length > 0 && (
         <VStack spacing={8} pt={8} w="100%" maxW="600px">
