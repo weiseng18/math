@@ -2,7 +2,7 @@ import { Button, HStack, Input, Spinner, Text, VStack } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 
 import PageWrapper from "components/PageWrapper"
-import { ErrorText, LoadingSpinner } from "components/basic"
+import { ErrorText, InputBar, LoadingSpinner } from "components/basic"
 
 import Router, { useRouter } from "next/router"
 import axios from "axios"
@@ -154,21 +154,14 @@ const Page = () => {
 
   return (
     <PageWrapper>
-      <HStack spacing={4} w="100%">
-        <Input
-          isRequired
-          onChange={handleChange}
-          onKeyDown={handleKeydown}
-          value={query}
-          placeholder="Put in your query"
-        />
-        <Button
-          disabled={error !== "" || !query.length || loading}
-          onClick={handleSubmit}
-        >
-          Submit
-        </Button>
-      </HStack>
+      <InputBar
+        handleChange={handleChange}
+        handleKeydown={handleKeydown}
+        handleSubmit={handleSubmit}
+        query={query}
+        errorMsg={error}
+        isLoading={loading}
+      />
       {error && error !== "" && <ErrorText>{error}</ErrorText>}
       {loading && <LoadingSpinner />}
       {answer !== "" && (
