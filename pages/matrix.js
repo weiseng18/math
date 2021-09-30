@@ -1,13 +1,8 @@
-import {
-  Button,
-  Container,
-  HStack,
-  Input,
-  Spinner,
-  Text,
-  VStack,
-} from "@chakra-ui/react"
+import { HStack, Text, VStack } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
+
+import PageWrapper from "components/PageWrapper"
+import { ErrorText, InputBar, LoadingSpinner } from "components/basic"
 
 import Router, { useRouter } from "next/router"
 import axios from "axios"
@@ -158,75 +153,56 @@ const Page = () => {
   }, [])
 
   return (
-    <Container maxW="100vw" margin="0" padding="0" overflowX="hidden">
-      <VStack spacing={4} w="100vw" px="15vw" py="40px" h="100%">
-        <HStack spacing={4} w="100%">
-          <Input
-            isRequired
-            onChange={handleChange}
-            onKeyDown={handleKeydown}
-            value={query}
-            placeholder="Put in your query"
-          />
-          <Button
-            disabled={error !== "" || !query.length || loading}
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
-        </HStack>
-        {error !== "" && <Text color="crimson">Error: {error}</Text>}
-        {loading && (
-          <HStack>
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="xl"
-            />
+    <PageWrapper>
+      <InputBar
+        handleChange={handleChange}
+        handleKeydown={handleKeydown}
+        handleSubmit={handleSubmit}
+        query={query}
+        errorMsg={error}
+        isLoading={loading}
+      />
+      {error && error !== "" && <ErrorText>{error}</ErrorText>}
+      {loading && <LoadingSpinner />}
+      {answer !== "" && (
+        <VStack
+          key={inputArray.join() + question}
+          spacing={8}
+          pt={8}
+          w="100%"
+          maxW="600px"
+        >
+          <HStack spacing={1}>
+            <Text>Your input is interpreted as:</Text>
+            <Text>${convert2DArrayToMatrix(inputArray)}$</Text>
           </HStack>
-        )}
-        {answer !== "" && (
-          <VStack
-            key={inputArray.join() + question}
-            spacing={8}
-            pt={8}
-            w="100%"
-            maxW="600px"
-          >
-            <HStack spacing={1}>
-              <Text>Your input is interpreted as:</Text>
-              <Text>${convert2DArrayToMatrix(inputArray)}$</Text>
+          {router.query.action && router.query.action !== "status" && (
+            <HStack spacing={1} bgColor="gray.200" padding={4}>
+              <>
+                <Text>${question} = $</Text>
+                <Text>${answer}$</Text>
+              </>
             </HStack>
-            {router.query.action && router.query.action !== "status" && (
-              <HStack spacing={1} bgColor="gray.200" padding={4}>
-                <>
-                  <Text>${question} = $</Text>
-                  <Text>${answer}$</Text>
-                </>
-              </HStack>
-            )}
-            {router.query.action && router.query.action === "status" && (
-              <VStack spacing={4} bgColor="gray.200" padding={4}>
-                <>
-                  <Text>${question}$</Text>
-                  <Text>Ans: {answer}</Text>
-                </>
-              </VStack>
-            )}
-            {router.query.action &&
-              router.query.action === "rref" &&
-              actions.length > 0 &&
-              rrefSteps(actions)}
-            {router.query.action &&
-              router.query.action === "inverse" &&
-              actions.length > 0 &&
-              inverseSteps(actions)}
-          </VStack>
-        )}
-      </VStack>
-    </Container>
+          )}
+          {router.query.action && router.query.action === "status" && (
+            <VStack spacing={4} bgColor="gray.200" padding={4}>
+              <>
+                <Text>${question}$</Text>
+                <Text>Ans: {answer}</Text>
+              </>
+            </VStack>
+          )}
+          {router.query.action &&
+            router.query.action === "rref" &&
+            actions.length > 0 &&
+            rrefSteps(actions)}
+          {router.query.action &&
+            router.query.action === "inverse" &&
+            actions.length > 0 &&
+            inverseSteps(actions)}
+        </VStack>
+      )}
+    </PageWrapper>
   )
 }
 
