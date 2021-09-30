@@ -1,9 +1,6 @@
 import {
-  Button,
   Code,
   HStack,
-  Input,
-  Spinner,
   Text,
   VStack,
   Table,
