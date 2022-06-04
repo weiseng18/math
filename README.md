@@ -2,6 +2,8 @@
 
 Web app that helps to perform some math computation, and tries to provide the intermediate steps taken.
 
+Very basic, matrix related stuff [here](https://math-weiseng18.vercel.app/matrix) and logic related stuff [here](https://math-weiseng18.vercel.app/logic)
+
 ## Where is this hosted?
 
 This project has simple CI/CD, and semantic versioning. I manage my deployments with the `master` and `develop` branches.
